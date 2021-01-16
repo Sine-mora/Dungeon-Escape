@@ -1,0 +1,3 @@
+﻿  Game.cpp
+C:\Users\Desert Combat\source\repos\Dungeon Escape\src\Game.cpp(103,25): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Dungeon Escape.vcxproj -> C:\Users\Desert Combat\source\repos\Dungeon Escape\Debug\Dungeon Escape.exe
