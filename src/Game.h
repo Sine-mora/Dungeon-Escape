@@ -21,6 +21,7 @@ class Game {
 		bool IsRunning() const;
 		static SDL_Renderer* renderer;
 		static AssetManager* assetmanager;
+		static SDL_Event event;
 		void LoadLevel(int levelNumber);
 		void Initialize(int width, int height);
 		void ProcessInput();

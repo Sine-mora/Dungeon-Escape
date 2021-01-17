@@ -21,6 +21,7 @@ class Entity {
 		std::string name;
 		Entity(EntityManager& manager);
 		Entity(EntityManager& manager, std::string name);
+		void ListAllComponents() const;
 		void Update(float deltaTime);
 		void Render();
 		void Destroy();
@@ -39,6 +40,11 @@ class Entity {
 		template <typename T>
 		T* GetComponent() {
 			return static_cast<T*>(componentTypeMap[&typeid(T)]);
+		}
+
+		template <typename T>
+		bool HasComponent() const {
+			return componentTypeMap.count(&typeid(T));
 		}
 };
 

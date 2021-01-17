@@ -2,14 +2,19 @@
 #include "./Constants.h"
 #include "./Game.h"
 #include "./AssetManager.h"
-#include "Components/TransformComponent.h"
+#include "./Map.h"
+#include "./Components/TransformComponent.h"
 #include "./Components/SpriteComponent.h"
+#include "./Components/KeyboardControlComponent.h"
+
 
 #include "../libs/glm/glm.hpp"
 
 EntityManager manager;
 AssetManager* Game::assetmanager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
+SDL_Event Game::event;
+Map* map;
 
 Game::Game() {
 	this->isRunning = false;
@@ -53,20 +58,48 @@ void Game::Initialize(int width, int height) {
 
 void Game::LoadLevel(int levelNumber) {
 	//Start including new assets to the assetmanager map
-	std::string textureFilePath = "./assets/images/tank-tiger-right.png";
-	assetmanager->AddTexture("tank-image", textureFilePath.c_str());
+	assetmanager->AddTexture("tank-image", std::string("./assets/images/tank-tiger-right.png").c_str());
+	assetmanager->AddTexture("chopper-image", std::string("./assets/images/chopper-spritesheet.png").c_str());
+	assetmanager->AddTexture("radar-image", std::string("./assets/images/radar-spritesheet.png").c_str());
+	assetmanager->AddTexture("jungle-tiletexture", std::string("./assets/tilemaps/jungle.png").c_str());
+
+	map = new Map("jungle-tiletexture", 2, 32);
+	map->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
 
 
 	//Start including entities and also components to them
-	Entity& newEntity(manager.AddEntity("tank"));
-	newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
-	newEntity.AddComponent<SpriteComponent>("tank-image");
+	Entity& chopperEntity(manager.AddEntity("chopper"));
+	chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
+	chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
+	chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+
+	Entity& tankEntity(manager.AddEntity("tank"));
+	tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+	tankEntity.AddComponent<SpriteComponent>("tank-image");
+	
+
+
+	Entity& radarEntity(manager.AddEntity("radar"));
+	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
+	radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
+	
+
+	//SpriteComponent(std::string id, int numFrames, int animationSpeed, bool hasDirections, bool isFixed) {
+	
+
+	manager.ListAllEntities();
+
+	if (tankEntity.HasComponent<TransformComponent>()) {
+		std::cout << " Entity has Component ";
+	}
+	else std::cout << "Entity has no such component";
 
 	
+
+
 }
 
 void Game::ProcessInput() {
-	SDL_Event event;
 	SDL_PollEvent(&event);
 	switch (event.type) {
 		case SDL_QUIT: {
