@@ -50,53 +50,30 @@ class KeyboardControlComponent: public Component {
 					transform->velocity.y = -50;
 					transform->velocity.x = 0;
 					sprite->Play("UpAnimation");
-
-					//Check for out of boundary
-					if (transform->position.y <= 0) {
-						transform->velocity.y = 0;
-						std::cout << "\nY: " << transform->position.y;
-					}
-
 				}
 				if (keyCode.compare(rightKey) == 0) {
 					transform->velocity.y = 0;
 					transform->velocity.x = 50;
 					sprite->Play("RightAnimation");
-
-					//Check for out of boundary
-					if (transform->position.x >= 768) {
-						transform->velocity.x = 0;
-						std::cout << "\nX: " << transform->position.x;
-					}
-
 				}
 				if (keyCode.compare(downKey) == 0) {
 					transform->velocity.y = 50;
 					transform->velocity.x = 0;
 					sprite->Play("DownAnimation");
-
-					//Check for out of boundary
-					if (transform->position.y >= 568) {
-						transform->velocity.y = 0;
-						std::cout << "\nY: " << transform->position.y;
-					}
-
 				}
 				if (keyCode.compare(leftKey) == 0) {
 					transform->velocity.y = 0;
 					transform->velocity.x = -50;
 					sprite->Play("LeftAnimation");
-
-					//Check for out of boundary
-					if (transform->position.x <= 0) {
-						transform->velocity.x = 0;
-						std::cout << "\nX: " << transform->position.x;
-					}
-
 				}
 				if (keyCode.compare(shootKey) == 0) {
 					//TODO...
 					//Shoot missiles when the key is pressed
+				}
+				if (keyCode == std::to_string(SDLK_F1)) {
+					//
+					Game::debug = true;
+					owner->Render();
 				}
 			}
 
