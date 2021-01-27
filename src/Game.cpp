@@ -72,16 +72,13 @@ void Game::LoadLevel(int levelNumber) {
 	assetmanager->AddTexture("radar-image", std::string("./assets/images/radar-spritesheet.png").c_str());
 	assetmanager->AddTexture("jungle-tiletexture", std::string("./assets/tilemaps/jungle.png").c_str());
 	assetmanager->AddTexture("heliport-image", std::string("./assets/images/base-landing.png").c_str());
-	assetmanager->AddFont("charriot-font", std::string("./assets/fonts/charriot.ttf").c_str(), 30);
+	assetmanager->AddFont("charriot-font", std::string("./assets/fonts/charriot.ttf").c_str(), 14);
 
 	map = new Map("jungle-tiletexture", 2, 32);
 	map->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
 
 
 	//Start including entities and also components to them
-	
-	Entity labelLevelName(manager.AddEntity("LabelLevelName", UI_LAYER));
-	labelLevelName.AddComponent<TextLabelComponent>(10, 10, "First Level...", "charriot-font", WHITE_COLOR);
 
 	player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
 	player.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
@@ -102,12 +99,15 @@ void Game::LoadLevel(int levelNumber) {
 	Entity& radarEntity(manager.AddEntity("radar", UI_LAYER));
 	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
 	radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
-	
-	
+
+	Entity& labelLevelName(manager.AddEntity("LabelLevelName", UI_LAYER));
+	labelLevelName.AddComponent<TextLabelComponent>(10, 10, "First Level...", "charriot-font", WHITE_COLOR);
+
+
 
 
 	//SpriteComponent(std::string id, int numFrames, int animationSpeed, bool hasDirections, bool isFixed) {
-	
+
 
 	manager.ListAllEntities();
 
@@ -125,7 +125,7 @@ void Game::ProcessInput() {
 				isRunning = false;
 				break;
 			}
-			break;			
+			break;
 		}
 		default: {
 			break;
@@ -136,7 +136,7 @@ void Game::ProcessInput() {
 void Game::Update() {
 	//Sleep the execution until we reach the target frame time in ms
 	int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
-	
+
 	//Only call delay if we are too fast to process this frame
 	if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
 		SDL_Delay(timeToWait);
@@ -175,7 +175,7 @@ void Game::Render() {
 
 void Game::HandleCameraMovement() {
 	TransformComponent* mainPlayerTransform = player.GetComponent<TransformComponent>();
-	
+
 	camera.x = mainPlayerTransform->position.x - (WINDOW_WIDTH / 2);
 	camera.y = mainPlayerTransform->position.y - (WINDOW_HEIGHT / 2);
 

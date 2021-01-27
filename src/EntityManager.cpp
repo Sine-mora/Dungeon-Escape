@@ -83,8 +83,6 @@ CollisionType EntityManager::CheckCollisions() const {
 						}
 
 						if ( (thisCollider->colliderTag.compare("PLAYER") == 0) && (thatCollider->colliderTag.compare("LEVEL_COMPLETE") == 0) ) {
-							std::cout << "\nThis Collider tag = " << thisCollider->colliderTag <<
-								     " And That collider Tag is " << thatCollider->colliderTag << std::endl;
 							return CollisionType::PLAYER_LEVEL_COMPLETE_COLLISION;
 						}
 					}
