@@ -17,6 +17,15 @@ void EntityManager::Update(float deltaTime) {
 	for (auto& entity : entities) {
 		entity->Update(deltaTime);
 	}
+	DestroyInactiveEntities();
+}
+
+void EntityManager::DestroyInactiveEntities() {
+	for (int i = 0; i < entities.size(); i++) {
+		if (!entities[i]->IsActive()) {
+			entities.erase(entities.begin() + i);
+		}
+	}
 }
 
 void EntityManager::Render() {
@@ -69,20 +78,16 @@ CollisionType EntityManager::CheckCollisions() const {
 				if (thisEntity->name.compare(thatEntity->name) != 0 && thatEntity->HasComponent<ColliderComponent>()) {
 					ColliderComponent* thatCollider = thatEntity->GetComponent<ColliderComponent>();
 					if (Collision::CheckRectangleCollision(thisCollider->collider, thatCollider->collider)) {
-
 						if (thisCollider->colliderTag.compare("PLAYER") == 0 && thatCollider->colliderTag.compare("ENEMY") == 0) {
 							return CollisionType::PLAYER_ENEMY_COLLISION;
 						}
-
 						if (thisCollider->colliderTag.compare("PLAYER") == 0 && thatCollider->colliderTag.compare("PROJECTILE") == 0) {
 							return CollisionType::PLAYER_PROJECTILE_COLLISION;
-						}
-						
+						}						
 						if (thisCollider->colliderTag.compare("ENEMY") == 0 && thatCollider->colliderTag.compare("FRIENDLY_PROJECTILE") == 0) {
 							return CollisionType::ENEMY_PROJECTILE_COLLISION;
 						}
-
-						if ( (thisCollider->colliderTag.compare("PLAYER") == 0) && (thatCollider->colliderTag.compare("LEVEL_COMPLETE") == 0) ) {
+						if (thisCollider->colliderTag.compare("PLAYER") == 0 && thatCollider->colliderTag.compare("LEVEL_COMPLETE") == 0) {
 							return CollisionType::PLAYER_LEVEL_COMPLETE_COLLISION;
 						}
 					}
@@ -92,23 +97,3 @@ CollisionType EntityManager::CheckCollisions() const {
 	}
 	return CollisionType::NO_COLLISION;
 }
-
-/*
-std::string EntityManager::CheckEntityCollisions(Entity& myEntity) const {
-	ColliderComponent* myCollider = myEntity.GetComponent<ColliderComponent>();
-	for (auto& entity : entities) {
-		if (entity->name.compare(myEntity.name) != 0 && entity->name.compare("Tile") != 0) {
-			if (entity->HasComponent<ColliderComponent>()) {
-				ColliderComponent* otherCollider = entity->GetComponent<ColliderComponent>();
-				if (Collision::CheckRectangleCollision(myCollider->collider, otherCollider->collider)) {
-					std::cout << "\n In Collision with " << otherCollider->colliderTag;
-					return otherCollider->colliderTag;
-				}
-			}
-		}
-	}
-	std::cout << "\n No collision ";
-	return std::string();
-}
-*/
-

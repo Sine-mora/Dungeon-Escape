@@ -16,6 +16,8 @@ class EntityManager {
 		bool HasNoEntities();
 		unsigned int GetEntityCount();
 		void ListAllEntities() const;
+		void DestroyInactiveEntities();
+
 		Entity& AddEntity(std::string entityName, LayerType layer);
 		std::vector<Entity*> GetEntitiesByLayer(LayerType layer) const;
 		std::vector<Entity*> GetEntities() const;
