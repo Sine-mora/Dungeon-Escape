@@ -69,10 +69,10 @@ void Game::LoadLevel(int levelNumber) {
 
 	std::string levelName = "Level" + std::to_string(levelNumber);
 	lua.script_file("./assets/scripts/" + levelName + ".lua");
-
-	//LOAD ASSETS FROM LUA CONFIG FILE
 	
-	
+	/////////////////////////////////////////////////////////////////
+	// LOAD ASSETS FROM LUA CONFIG FILE
+	/////////////////////////////////////////////////////////////////	
 	sol::table levelData = lua[levelName];
 	sol::table levelAssets = levelData["assets"];
 
@@ -89,13 +89,19 @@ void Game::LoadLevel(int levelNumber) {
 				std::string assetFile = asset["file"];
 				assetmanager->AddTexture(assetId, assetFile.c_str());
 			}
+			if (assetType.compare("font") == 0) {
+				std::string assetId = asset["id"];
+				std::string assetFile = asset["file"];
+				int fontSize = asset["fontSize"];
+				assetmanager->AddFont(assetId, assetFile.c_str(), fontSize);
+			}
 		}
 		assetIndex++;
 	}
-	
-	//LOAD MAP FROM LUA CONFIG FILE
-	
-	
+
+	//////////////////////////////////////////////////////////////////////////
+	// LOAD MAP AND TILE INFORMATION FROM LUA CONFIG FILE
+	//////////////////////////////////////////////////////////////////////////	
 	sol::table levelMap = levelData["map"];
 	std::string mapTextureId = levelMap["textureAssetId"];
 	std::string mapFile = levelMap["file"];
@@ -111,6 +117,75 @@ void Game::LoadLevel(int levelNumber) {
 		static_cast<int>(levelMap["mapSizeX"]),
 		static_cast<int>(levelMap["mapSizeY"])
 	);
+
+	///////////////////////////////////////////////////////////////////////////
+	// LOAD ENTITIES
+	///////////////////////////////////////////////////////////////////////////
+	sol::table levelEntities = levelData["entities"];
+
+	unsigned int entityIndex = 0;
+	while (true) {
+		sol::optional<sol::table> existsEntityIndexNode = levelEntities[entityIndex];
+		if (existsEntityIndexNode == sol::nullopt) {
+			break;
+		}
+		else {
+			sol::table entity = levelEntities[entityIndex];
+			std::string entityName = entity["name"];
+			LayerType entityLayerType = static_cast<LayerType>(static_cast<int>(entity["layer"]));
+
+			//Add new Entity
+			auto& newEntity(manager.AddEntity(entityName, entityLayerType));
+
+			//Add Transform Component
+			sol::optional<sol::table> existsTransformComponent = entity["components"]["transform"];
+			if (existsTransformComponent != sol::nullopt) {
+				newEntity.AddComponent<TransformComponent>(
+					static_cast<int>(entity["components"]["transform"]["position"]["x"]),
+					static_cast<int>(entity["components"]["transform"]["position"]["y"]),
+					static_cast<int>(entity["components"]["transform"]["velocity"]["x"]),
+					static_cast<int>(entity["components"]["transform"]["velocity"]["y"]),
+					static_cast<int>(entity["components"]["transform"]["width"]),
+					static_cast<int>(entity["components"]["transform"]["height"]),
+					static_cast<int>(entity["components"]["transform"]["scale"])
+					);
+			}
+
+			//Add Sprite Component
+			sol::optional<sol::table> existsSpriteComponent = entity["components"]["sprite"];
+			if (existsSpriteComponent != sol::nullopt) {
+				std::string textureId = entity["components"]["sprite"]["textureAssetId"];
+				bool isAnimated = entity["components"]["sprite"]["animated"];
+				if (isAnimated) {
+					newEntity.AddComponent<SpriteComponent>(
+						textureId,
+						static_cast<int>(entity["components"]["sprite"]["frameCount"]),
+						static_cast<int>(entity["components"]["sprite"]["animationSpeed"]),
+						static_cast<int>(entity["components"]["sprite"]["hasDirections"]),
+						static_cast<int>(entity["components"]["sprite"]["fixed"])
+						);
+				}
+				else {
+					newEntity.AddComponent<SpriteComponent>(textureId, false);
+				}
+			}
+
+			//Add Input Control Component
+			sol::optional<sol::table> existsInputComponent = entity["components"]["input"];
+			if (existsInputComponent != sol::nullopt) {
+				sol::optional<sol::table> existsKeyboardInputComponent = entity["component"]["keyboard"];
+				if (existsKeyboardInputComponent != sol::nullopt) {
+
+				}
+			}
+			
+			//Add projectile emitter component
+			sol::optional<sol::table> existsProjectileEmitterComponent = entity["components"][""];
+
+		}
+
+	}
+
 
 	/*
 	//Start including new assets to the assetmanager map
@@ -179,7 +254,9 @@ void Game::ProcessInput() {
 		case SDL_KEYDOWN: {
 			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				isRunning = false;
-			}		
+				break;
+			}
+			break;
 		}
 		default: {
 			break;
