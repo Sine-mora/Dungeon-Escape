@@ -1,0 +1,4 @@
+C:/Users/Desert Combat/Desktop/Cmaketests/CMakeFiles/hello.dir
+C:/Users/Desert Combat/Desktop/Cmaketests/CMakeFiles/ALL_BUILD.dir
+C:/Users/Desert Combat/Desktop/Cmaketests/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Desert Combat/Desktop/Cmaketests/libs/SDL2-2.0.14/lib/x86/CMakeFiles/SDL2_LIBRARY.dir

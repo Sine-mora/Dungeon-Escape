@@ -1,0 +1,22 @@
+﻿  Building Custom Rule C:/Users/Desert Combat/Desktop/Cmaketests/CMakeLists.txt
+  CMake is re-running because C:/Users/Desert Combat/Desktop/Cmaketests/CMakeFiles/generate.stamp is out-of-date.
+    the file 'C:/Users/Desert Combat/Desktop/Cmaketests/CMakeLists.txt'
+    is newer than 'C:/Users/Desert Combat/Desktop/Cmaketests/CMakeFiles/generate.stamp.depend'
+    result='-1'
+  -- Selecting Windows SDK version 10.0.18362.0 to target Windows 10.0.19042.
+  -- Configuring done
+  CMake Error at blah/CMakeLists.txt:1 (add_library):
+    Cannot find source file:
+  
+      blah/Blah.cpp
+  
+    Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
+    .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .ispc
+  
+  
+  CMake Error at blah/CMakeLists.txt:1 (add_library):
+    No SOURCES given to target: blah
+  
+  
+  CMake Generate step failed.  Build files cannot be regenerated correctly.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(238,5): error MSB8066: Custom build for 'C:\Users\Desert Combat\Desktop\Cmaketests\CMakeLists.txt' exited with code 1.

@@ -1,0 +1,10 @@
+^C:\USERS\DESERT COMBAT\DESKTOP\CMAKETESTS\CMAKEFILES\039AFC7F5A973185F610D8FA0AE9F1D3\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Desert Combat/Desktop/Cmaketests" "-BC:/Users/Desert Combat/Desktop/Cmaketests" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/Desert Combat/Desktop/Cmaketests/hello.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
