@@ -1,2 +1,0 @@
-C:/Users/Desert Combat/Desktop/sdlandCmake/libs/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Desert Combat/Desktop/sdlandCmake/libs/build/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,5 @@
+C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/CMakeFiles/SDL_Test.dir
+C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
+C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2/CMakeFiles/edit_cache.dir
+C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2/CMakeFiles/rebuild_cache.dir
