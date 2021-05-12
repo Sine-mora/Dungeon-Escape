@@ -15,18 +15,6 @@ include_directories(hello PUBLIC libs/SDL2-2.0.14/lib/x86)
 target_link_libraries(hello PUBLIC ${SDL2_LIBRARY})
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 #target_include_directories(hello PUBLIC ${SDL_INCLUDE_DIR})
 #target_link_libraries(hello PUBLIC blah ${SDL_LIBRARIES} ${SDL_DEPENDENCIES})
 

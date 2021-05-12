@@ -2,6 +2,8 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include <SDL_image.h>
+#include <sol.hpp>
+#include <lua.h>
 #include <iostream>
 
 //Screen dimension constants
