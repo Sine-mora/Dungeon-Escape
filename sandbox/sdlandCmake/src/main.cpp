@@ -10,14 +10,25 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
+
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;
 
 	//The surface contained by the window
 	SDL_Surface* screenSurface = NULL;
 
+	//Initialize SDL TTF
+	if (TTF_Init() < 0)
+	{
+		std::cerr << "SDL TTF could not initialize! TTF_Error: " << TTF_GetError() << "\n";
+	}
+	//Initialize SDL MIXER
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) 
+	{
+		std::cerr << "SDL MIXER could not initialize! Mixer_Error: " << Mix_GetError() << "\n";
+	}
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << "\n";
 	}

@@ -35,6 +35,9 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2/cmake_install.cmake")
+  include("C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2_image/cmake_install.cmake")
+  include("C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2_mixer/cmake_install.cmake")
+  include("C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/libs/SDL2_ttf/cmake_install.cmake")
 
 endif()
 

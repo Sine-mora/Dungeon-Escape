@@ -1,7 +1,3 @@
 # ninja log v5
-1	623	642360730	CMakeFiles/SDL_Test.dir/src/main.cpp.obj	56d7039f8965818b
-627	1174	642360730	SDL_Test.exe	8b140a62fbf4aac1
-1	725	642362000	CMakeFiles/SDL_Test.dir/src/main.cpp.obj	56d7039f8965818b
-725	1006	642362000	SDL_Test.exe	8b140a62fbf4aac1
-1	487	642362016	CMakeFiles/SDL_Test.dir/src/main.cpp.obj	56d7039f8965818b
-487	778	642362016	SDL_Test.exe	8b140a62fbf4aac1
+0	409	642534957	CMakeFiles/SDL_Test.dir/src/main.cpp.obj	51ccc020885dcdd0
+410	759	642534957	SDL_Test.exe	3fe2bd6849e6939f

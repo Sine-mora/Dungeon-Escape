@@ -50,16 +50,16 @@ The CXX compiler identification is MSVC, found in "C:/Users/Desert Combat/source
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b03dd && [1/2] Building C object CMakeFiles\cmTC_b03dd.dir\CMakeCCompilerABI.c.obj
-[2/2] Linking C executable cmTC_b03dd.exe
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_24995 && [1/2] Building C object CMakeFiles\cmTC_24995.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_24995.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/out/build/x64-Debug (default)/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_12813 && [1/2] Building CXX object CMakeFiles\cmTC_12813.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_12813.exe
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_7ce96 && [1/2] Building CXX object CMakeFiles\cmTC_7ce96.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX executable cmTC_7ce96.exe
 
 
 
