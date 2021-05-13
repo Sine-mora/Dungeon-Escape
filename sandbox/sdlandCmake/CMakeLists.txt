@@ -72,36 +72,40 @@ endif(UNIX)
 if(WIN32)
 	
     set(SDL_PATH ${LIBS}/SDL2)
-	
-	add_subdirectory(${SDL_PATH})
-
-	target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
+	    add_subdirectory(${SDL_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
 
     set(SDL_IMAGE_PATH ${LIBS}/SDL2_image)
-    
-	add_subdirectory(${SDL_IMAGE_PATH})
-	
-	target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
+     add_subdirectory(${SDL_IMAGE_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
     set(SDL_MIXER_PATH ${LIBS}/SDL2_mixer)
-	
-	add_subdirectory(${SDL_MIXER_PATH})
-
-	target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
+        add_subdirectory(${SDL_MIXER_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
 
     set(SDL2_TTF_PATH ${LIBS}/SDL2_ttf)
-	
-	add_subdirectory(${SDL2_TTF_PATH})
-
-	target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
+        add_subdirectory(${SDL2_TTF_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
 
     set(LUA_PATH ${LIBS}/lua)
-	target_include_directories(${BINARY} PUBLIC ${LUA_PATH})
+        add_subdirectory(${LUA_PATH})
+        target_include_directories(${BINARY} PUBLIC ${LUA_PATH})
 	
     set(SOL_PATH ${LIBS}/sol)
-	target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
+        add_subdirectory(${SOL_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
 	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES})
+    set(GLM_PATH ${LIBS}/glm)
+        add_subdirectory(${GLM_PATH})
+	   target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
+	
+    set(IMGUI_PATH ${LIBS}/imgui)
+        add_subdirectory(${IMGUI_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
+
+    #TODO MAKE GLM Lib and add to the target_link_libs
+	
+    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; imgui; glm)
 
     #Copy the SDL2.dll 	
     post_build_copy("${EXTERN_SDL_LIBS_PATH}/SDL2.dll")

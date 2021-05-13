@@ -1,0 +1,26 @@
+add_library(glm
+    		${CMAKE_CURRENT_SOURCE_DIR}/common.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/exponential.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/ext.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/fwd.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/geometric.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/glm.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/integer.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat2x2.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat2x3.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat2x4.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat2x4.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat3x2.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat3x3.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat3x4.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat4x2.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat4x3.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/mat4x4.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/matrix.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/packing.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/trigonometric.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/vec2.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/vec3.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/vec4.hpp
+			${CMAKE_CURRENT_SOURCE_DIR}/vector_relational.hpp)
+										

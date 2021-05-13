@@ -3,7 +3,6 @@
 #include <SDL_mixer.h>
 #include <SDL_image.h>
 #include <sol.hpp>
-#include <lua.h>
 #include <iostream>
 
 //Screen dimension constants
@@ -12,6 +11,10 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
+	sol::state lua;
+	lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::math);
+
+	std::string levelName = "Level N\n";
 
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;

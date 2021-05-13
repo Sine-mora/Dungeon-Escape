@@ -1,0 +1,17 @@
+# Directories
+build/
+**/build/
+out/
+**/out/
+
+# Files
+*.user
+*.ini
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+*/.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
