@@ -95,20 +95,27 @@ if(WIN32)
 
 	target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
 	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES})
-
 	#ADD Lua,sol,imgui, glm
     set(LUA_PATH ${LIBS}/lua)
+	аdd_subdirectory(${LUA_PATH})
 	target_include_directories(${BINARY} PUBLIC ${LUA_PATH})
 	
     set(SOL_PATH ${LIBS}/sol)
+	аdd_subdirectory(${SOL_PATH})
 	target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
 
     set(GLM_PATH ${LIBS}/glm)
+	аdd_subdirectory(${GLM_PATH})
 	target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
 
     set(IMGUI_PATH ${LIBS}/imgui)
+
+	аdd_subdirectory(${IMGUI_PATH})
+
 	target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
+
+    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; glm; imgui)
+
 
     #Copy the SDL2.dll 	
     post_build_copy("${EXTERN_SDL_LIBS_PATH}/SDL2.dll")
