@@ -33,7 +33,7 @@ MACRO(HEADER_DIRECTORIES return_list curr_dir)
 ENDMACRO()
 
 MACRO(SOURCE_FILES return_list curr_dir)
-    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.cpp ${curr_dir}/*.hpp ${curr_dir}/*.inl)
+    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.cpp ${curr_dir}/*.hpp ${curr_dir}/*.inl ${curr_dir}/*.c)
     SET(dir_list "")
     FOREACH(file_path ${new_list})
         message(STATUS "[INFO] file_path: ${file_path}")
@@ -105,7 +105,7 @@ if(WIN32)
 
     #TODO MAKE GLM Lib and add to the target_link_libs
 	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; ${LUA_PATH}/liblua53.a; imgui; glm)
+    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; lua_lib; imgui; glm)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")

@@ -11,8 +11,8 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
-	//sol::state lua;
-	//lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::math);
+	sol::state lua;
+	lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::math);
 
 	std::string levelName = "Level N\n";
 
