@@ -1,9 +1,9 @@
 #ifndef PROJECTILEEMITTERCOMPONENT_H
 #define PROJECTILEEMITTERCOMPONENT_H
 
-#include "../../libs/glm/glm.hpp"
-#include "../EntityManager.h"
-#include "../Components/TransformComponent.h"
+#include <glm/glm.hpp>
+#include "EntityManager.h"
+#include "TransformComponent.h"
 
 class ProjectileEmitterComponent: public Component {
 private:

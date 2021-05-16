@@ -29,6 +29,10 @@ class SpriteComponent :public Component {
 			SetTexture(assetTextureId);
 		}
 
+		SpriteComponent(std::string assetTextureId, bool test) {
+			SetTexture(assetTextureId);
+		}
+
 		void ChangeDirection(std::string newDirection) {
 			currentAnimationName = newDirection;
 		}

@@ -24,7 +24,11 @@ Level1 = {
                     position = {
                         x = 240,
                         y = 106
-                    },
+                    }
+		    velocity = {
+			x= 50,
+			y= 50
+		    },
                     width = 32,
                     height = 32,
                     scale = 1,

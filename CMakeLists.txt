@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(DungeonEscape)
+project(SDL_Test)
 
 message(STATUS "${PROJECT_NAME} is located in ${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -33,7 +33,7 @@ MACRO(HEADER_DIRECTORIES return_list curr_dir)
 ENDMACRO()
 
 MACRO(SOURCE_FILES return_list curr_dir)
-    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.cpp ${curr_dir}/*.hpp ${curr_dir}/*.inl)
+    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.cpp ${curr_dir}/*.hpp ${curr_dir}/*.inl ${curr_dir}/*.c)
     SET(dir_list "")
     FOREACH(file_path ${new_list})
         message(STATUS "[INFO] file_path: ${file_path}")
@@ -72,50 +72,43 @@ endif(UNIX)
 if(WIN32)
 	
     set(SDL_PATH ${LIBS}/SDL2)
-	
-	add_subdirectory(${SDL_PATH})
-
-	target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
+	    add_subdirectory(${SDL_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
 
     set(SDL_IMAGE_PATH ${LIBS}/SDL2_image)
-    
-	add_subdirectory(${SDL_IMAGE_PATH})
-	
-	target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
+     add_subdirectory(${SDL_IMAGE_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
     set(SDL_MIXER_PATH ${LIBS}/SDL2_mixer)
-	
-	add_subdirectory(${SDL_MIXER_PATH})
-
-	target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
+        add_subdirectory(${SDL_MIXER_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
 
     set(SDL2_TTF_PATH ${LIBS}/SDL2_ttf)
-	
-	add_subdirectory(${SDL2_TTF_PATH})
+        add_subdirectory(${SDL2_TTF_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
 
-	target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
-	
-	#ADD Lua,sol,imgui, glm
     set(LUA_PATH ${LIBS}/lua)
-	аdd_subdirectory(${LUA_PATH})
-	target_include_directories(${BINARY} PUBLIC ${LUA_PATH})
+        add_subdirectory(${LUA_PATH})
+        target_include_directories(${BINARY} PUBLIC ${LUA_INCLUDE_DIRS})
 	
     set(SOL_PATH ${LIBS}/sol)
-	аdd_subdirectory(${SOL_PATH})
-	target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
-
+        add_subdirectory(${SOL_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
+	
     set(GLM_PATH ${LIBS}/glm)
-	аdd_subdirectory(${GLM_PATH})
-	target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
-
+        add_subdirectory(${GLM_PATH})
+	   target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
+	
     set(IMGUI_PATH ${LIBS}/imgui)
+        add_subdirectory(${IMGUI_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
 
-	аdd_subdirectory(${IMGUI_PATH})
+    #TODO MAKE GLM Lib and add to the target_link_libs
+	
+    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; lua_lib; imgui; glm)
 
-	target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
-
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; glm; imgui)
-
+    #Copy the lua53.dll 	
+    post_build_copy("${LUA_PATH}/lua53.dll")
 
     #Copy the SDL2.dll 	
     post_build_copy("${EXTERN_SDL_LIBS_PATH}/SDL2.dll")
@@ -128,11 +121,15 @@ if(WIN32)
 
     #Copy the SDL TTF dlls
     post_build_copy("${EXTERN_SDL_TTF_LIBS_PATH}/SDL2_ttf.dll;${EXTERN_SDL_TTF_LIBS_PATH}/libfreetype-6.dll;${EXTERN_SDL_TTF_LIBS_PATH}/zlib1.dll")
+	
+    #Copy the Assets folder
+    set(ASSETS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assets)
+    file(COPY ${ASSETS_PATH} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 	#End of copy
 
     message(STATUS "[INFO] ${BINARY} SDL_PATH: ${SDL_PATH}\n SDL_INCLUDE_DIRS:  ${SDL2_INCLUDE_DIRS} \n SDL2_LIBRARIES: ${SDL2_LIBRARIES} \n EXTERN_SDL_LIBS_PATH: ${EXTERN_SDL_LIBS_PATH} \n
 SDL_IMAGE_PATH: ${SDL_IMAGE_PATH}\n SDL_IMAGE_INCLUDE_DIRS: ${SDL2_IMAGE_INCLUDE_DIRS} \n SDL2_IMAGE_LIBRARIES: ${SDL2_IMAGE_LIBRARIES} \n EXTERN_SDL_IMAGE_PATH: ${EXTERN_SDL_IMAGE_LIBS_PATH} \n
 SDL_MIXER_PATH: ${SDL_MIXER_PATH}\n SDL_MIXER_INCLUDE_DIRS: ${SDL2_MIXER_INCLUDE_DIRS} \n SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES} \n EXTERN_SDL_MIXER_PATH: ${EXTERN_SDL_MIXER_LIBS_PATH} \n
-SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n ")
+SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n ==[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n")
 
 endif(WIN32)

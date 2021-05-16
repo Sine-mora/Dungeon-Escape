@@ -1,15 +1,16 @@
 #include <iostream>
-#include "./Constants.h"
-#include "./Game.h"
-#include "./AssetManager.h"
-#include "./Map.h"
-#include "./Components/TransformComponent.h"
-#include "./Components/SpriteComponent.h"
-#include "./Components/KeyboardControlComponent.h"
-#include "./Components/ColliderComponent.h"
-#include "./Components/TextLabelComponent.h"
-#include "./Components/ProjectileEmitterComponent.h"
-#include "../libs/glm/glm.hpp"
+#include "Constants.h"
+#include "Game.h"
+#include "AssetManager.h"
+#include "Map.h"
+#include "Components/TransformComponent.h"
+#include "Components/SpriteComponent.h"
+#include "Components/KeyboardControlComponent.h"
+#include "Components/ColliderComponent.h"
+#include "Components/TextLabelComponent.h"
+#include "Components/ProjectileEmitterComponent.h"
+#include "Components/ProjectileEmitterComponent.h"
+#include <glm/glm.hpp>
 
 EntityManager manager;
 AssetManager* Game::assetmanager = new AssetManager(&manager);
@@ -57,7 +58,15 @@ void Game::Initialize(int width, int height) {
 		return;
 	}
 	debug = false;
-	LoadLevel(1);
+	try
+	{
+		LoadLevel(1);
+	}
+	catch (std::exception e)
+	{
+		std::cerr << "Failed to load level. e.what(): " << e.what() << "\n";
+	}
+
 
 	isRunning = true;
 	return;
@@ -74,7 +83,18 @@ void Game::LoadLevel(int levelNumber) {
 	// LOAD ASSETS FROM LUA CONFIG FILE
 	/////////////////////////////////////////////////////////////////	
 	sol::table levelData = lua[levelName];
+	if (!levelData.valid())
+	{
+		std::cerr << "lua[levelName: " << levelName << "] is not valid!";
+		return;
+	}
 	sol::table levelAssets = levelData["assets"];
+	if (!levelAssets.valid())
+	{
+		std::cerr << "levelData[\"assets\"] is not valid!";
+		return;
+	}
+
 
 	unsigned int assetIndex = 0;
 	while (true) {
@@ -83,6 +103,11 @@ void Game::LoadLevel(int levelNumber) {
 			break;
 		} else {
 			sol::table asset = levelAssets[assetIndex];
+			if (!asset.valid())
+			{
+				std::cerr << "levelAssets[assetIndex: " << assetIndex << "] is not valid!";
+				return;
+			}
 			std::string assetType = asset["type"];
 			if (assetType.compare("texture") == 0) {
 				std::string assetId = asset["id"];
@@ -103,6 +128,11 @@ void Game::LoadLevel(int levelNumber) {
 	// LOAD MAP AND TILE INFORMATION FROM LUA CONFIG FILE
 	//////////////////////////////////////////////////////////////////////////	
 	sol::table levelMap = levelData["map"];
+	if (!levelMap.valid())
+	{
+		std::cerr << "levelData[\"map\"] is not valid!";
+		return;
+	}
 	std::string mapTextureId = levelMap["textureAssetId"];
 	std::string mapFile = levelMap["file"];
 
@@ -131,6 +161,12 @@ void Game::LoadLevel(int levelNumber) {
 		}
 		else {
 			sol::table entity = levelEntities[entityIndex];
+			if (!entity.valid())
+			{
+
+				std::cerr << "levelEntities[entityIndex: " << entityIndex << "] is not valid!";
+				return;
+			}
 			std::string entityName = entity["name"];
 			LayerType entityLayerType = static_cast<LayerType>(static_cast<int>(entity["layer"]));
 
@@ -140,14 +176,57 @@ void Game::LoadLevel(int levelNumber) {
 			//Add Transform Component
 			sol::optional<sol::table> existsTransformComponent = entity["components"]["transform"];
 			if (existsTransformComponent != sol::nullopt) {
+				auto posX = entity["components"]["transform"]["position"]["x"];
+				if (!posX.valid())
+				{
+					std::cerr << "entityName: " << entityName << " posX not valid!";
+					return;
+				}
+				auto posY = entity["components"]["transform"]["position"]["y"];
+				if (!posY.valid())
+				{
+					std::cerr << "entityName: " << entityName << " posY not valid!";
+					return;
+				}
+				auto velocityX = entity["components"]["transform"]["velocity"]["x"];
+				if (!velocityX.valid())
+				{
+					std::cerr << "entityName: " << entityName << " velocityX not valid!";
+					return;
+				}
+				auto velocityY = entity["components"]["transform"]["velocity"]["y"];
+				if (!velocityY.valid())
+				{
+					std::cerr << "entityName: " << entityName << " velocityY not valid!";
+					return;
+				}
+				auto width = entity["components"]["transform"]["width"];
+				if (!width.valid())
+				{
+					std::cerr << "entityName: " << entityName << " width not valid!";
+					return;
+				}
+				auto height = entity["components"]["transform"]["height"];
+				if (!height.valid())
+				{
+					std::cerr << "entityName: " << entityName << " height not valid!";
+					return;
+				}
+				auto scale = entity["components"]["transform"]["scale"];
+				if (!scale.valid())
+				{
+					std::cerr << "entityName: " << entityName << " scale not valid!";
+					return;
+				}
+
 				newEntity.AddComponent<TransformComponent>(
-					static_cast<int>(entity["components"]["transform"]["position"]["x"]),
-					static_cast<int>(entity["components"]["transform"]["position"]["y"]),
-					static_cast<int>(entity["components"]["transform"]["velocity"]["x"]),
-					static_cast<int>(entity["components"]["transform"]["velocity"]["y"]),
-					static_cast<int>(entity["components"]["transform"]["width"]),
-					static_cast<int>(entity["components"]["transform"]["height"]),
-					static_cast<int>(entity["components"]["transform"]["scale"])
+					static_cast<int>(posX),
+					static_cast<int>(posY),
+					static_cast<int>(velocityX),
+					static_cast<int>(velocityY),
+					static_cast<int>(width),
+					static_cast<int>(height),
+					static_cast<int>(scale)
 					);
 			}
 
@@ -183,7 +262,7 @@ void Game::LoadLevel(int levelNumber) {
 			sol::optional<sol::table> existsProjectileEmitterComponent = entity["components"][""];
 
 		}
-
+		entityIndex++;
 	}
 
 

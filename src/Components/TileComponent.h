@@ -2,9 +2,9 @@
 #define TILECOMPONENT_H
 
 #include <SDL.h>
-#include "../EntityManager.h"
-#include "../AssetManager.h"
-#include "../../libs/glm/glm.hpp"
+#include "EntityManager.h"
+#include "AssetManager.h"
+#include <glm/glm.hpp>
 
 class TileComponent : public Component {
 	public:
