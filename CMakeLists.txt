@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(SDL_Test)
+project(Dungeon-Escape)
 
 message(STATUS "${PROJECT_NAME} is located in ${CMAKE_CURRENT_SOURCE_DIR}")
 
@@ -63,6 +63,7 @@ add_executable(${BINARY} ${source_file_list})
 
 set(LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Components)
 include_directories(${LIBS})
 
 if(UNIX)
