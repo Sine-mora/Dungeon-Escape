@@ -10,6 +10,7 @@
 #include "TextLabelComponent.h"
 #include "ProjectileEmitterComponent.h"
 #include "glm/glm.hpp"
+#include <optional>
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -18,6 +19,8 @@ SDL_Event Game::event;
 SDL_Rect Game::camera = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 Entity* mainPlayer = NULL;
 Map* map;
+
+std::optional;
 
 Game::Game() {
     this->isRunning = false;
@@ -66,6 +69,9 @@ bool Game::Initialize(int width, int height) {
 
 bool Game::LoadLevel(int levelNumber) {
     try {
+
+        std::cout << "C++ standard:"<< __cplusplus;
+
         sol::state lua;
         lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::math);
 

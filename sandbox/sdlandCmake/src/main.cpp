@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <sol.hpp>
 #include <iostream>
+#include <enet/enet.h>
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
@@ -11,6 +12,18 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
+
+
+
+
+	//ENET
+	if (enet_initialize() != 0) {
+		
+		return 0;
+	}
+	std::cout << "ENET INITIALIZED SUCCESSFULLY!\n";
+
+	//SDL and LUA
 	sol::state lua;
 	lua.open_libraries(sol::lib::base, sol::lib::os, sol::lib::math);
 

@@ -4,7 +4,7 @@ project(SDL_Test)
 
 message(STATUS "${PROJECT_NAME} is located in ${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -76,7 +76,7 @@ if(WIN32)
         target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
 
     set(SDL_IMAGE_PATH ${LIBS}/SDL2_image)
-     add_subdirectory(${SDL_IMAGE_PATH})
+        add_subdirectory(${SDL_IMAGE_PATH})
 	    target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
     set(SDL_MIXER_PATH ${LIBS}/SDL2_mixer)
@@ -97,15 +97,18 @@ if(WIN32)
 	
     set(GLM_PATH ${LIBS}/glm)
         add_subdirectory(${GLM_PATH})
-	   target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
+	    target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
 	
     set(IMGUI_PATH ${LIBS}/imgui)
         add_subdirectory(${IMGUI_PATH})
 	    target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
 
-    #TODO MAKE GLM Lib and add to the target_link_libs
+    set(ENET_PATH ${LIBS}/enet)
+        add_subdirectory(${ENET_PATH})
+        target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
 	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; lua_lib; imgui; glm)
+    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")
@@ -127,6 +130,7 @@ if(WIN32)
     message(STATUS "[INFO] ${BINARY} SDL_PATH: ${SDL_PATH}\n SDL_INCLUDE_DIRS:  ${SDL2_INCLUDE_DIRS} \n SDL2_LIBRARIES: ${SDL2_LIBRARIES} \n EXTERN_SDL_LIBS_PATH: ${EXTERN_SDL_LIBS_PATH} \n
 SDL_IMAGE_PATH: ${SDL_IMAGE_PATH}\n SDL_IMAGE_INCLUDE_DIRS: ${SDL2_IMAGE_INCLUDE_DIRS} \n SDL2_IMAGE_LIBRARIES: ${SDL2_IMAGE_LIBRARIES} \n EXTERN_SDL_IMAGE_PATH: ${EXTERN_SDL_IMAGE_LIBS_PATH} \n
 SDL_MIXER_PATH: ${SDL_MIXER_PATH}\n SDL_MIXER_INCLUDE_DIRS: ${SDL2_MIXER_INCLUDE_DIRS} \n SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES} \n EXTERN_SDL_MIXER_PATH: ${EXTERN_SDL_MIXER_LIBS_PATH} \n
-SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n ==[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n")
+SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n
+[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n ENET_PATH: ${ENET_PATH} \n ENET_LIB: ${ENET_LIB} \n")
 
 endif(WIN32)
