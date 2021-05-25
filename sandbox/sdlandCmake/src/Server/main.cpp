@@ -1,5 +1,5 @@
 #include <iostream>
-#include <enet.h>
+#include "enet/enet.h"
 
 int main() {
 	
@@ -7,7 +7,7 @@ int main() {
 		std::cerr << "Error initializing ENet";
 		return EXIT_FAILURE;
 	}
-	atexit(enet_deinitialize());
+	atexit(enet_deinitialize);
 	
 	ENetAddress address;	
 	ENetHost* server;
@@ -37,21 +37,25 @@ int main() {
 					event.peer->address.port);
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
-				printf("A packet of length %u containing %s was received from %x:%u on channel %u.\n",
+				printf ("A packet of length %u containing %s was received from %x:%u on channel %u.\n",
 					event.packet->dataLength,
 					event.packet->data,
 					event.peer->address.host,
 					event.peer->address.port,
 					event.channelID);
 				break;
-
-
+			case ENET_EVENT_TYPE_DISCONNECT:
+				printf("%x:%u disconnected.\n",
+					event.peer->address.host,
+					event.peer->address.port);
+					break;
 			}
 		}
 	}
 
 	//END GAME LOOP
 
+	enet_host_destroy(server);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
