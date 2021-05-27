@@ -19,6 +19,7 @@
 3. Мрежово свързване
 	3.1 ENet - Клиент / Сървър
 	3.2 Игра тип агарио - 2 кръга мрежово свързани
+	- Клас Render2D с метод void DrawCircle(const glm::vec2& posCenter, double dRadius);
 
 4. Misc
 	4.1 Конзолно меню със състояния

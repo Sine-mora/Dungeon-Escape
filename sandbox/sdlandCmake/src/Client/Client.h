@@ -5,7 +5,7 @@
 
 
 class Client {
-	private:
+/*	private:
 		ENetHost* m_client;
 		ENetAddress m_address;
 		ENetEvent m_event;
@@ -21,7 +21,7 @@ class Client {
 		void ReceiveComms();
 		bool Disconnect();
 		bool Shutdown();
-
+		*/
 };
 
 #endif // !CLIENT_H

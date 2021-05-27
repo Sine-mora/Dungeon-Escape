@@ -1,4 +1,4 @@
-
+/*
 if (enet_initialize() != 0) {
 	std::cerr << "Error initializing ENet";
 	return EXIT_FAILURE;
@@ -52,3 +52,5 @@ while (true)
 //END GAME LOOP
 
 enet_host_destroy(server);
+
+*/
