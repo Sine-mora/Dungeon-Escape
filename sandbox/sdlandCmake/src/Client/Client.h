@@ -5,23 +5,24 @@
 
 
 class Client {
-/*	private:
+	private:
 		ENetHost* m_client;
-		ENetAddress m_address;
+		ENetAddress m_address; // The address of the server to which it connects
 		ENetEvent m_event;
-		ENetPeer* m_peer;
+		ENetPeer* m_peer; 
 
 	public:
 		Client();
+		~Client();
 		bool Init();
 		bool CreateClient();
-		bool SetHost(ENetAddress address);
+		void SetHost();
 		bool ConnectPeer();
 		bool ConnectServer();
-		void ReceiveComms();
-		bool Disconnect();
-		bool Shutdown();
-		*/
+		void ReceiveComms(); //BEGIN GAME LOOP
+		void Disconnect(); //END GAME LOOP
+		void Shutdown();
+		
 };
 
 #endif // !CLIENT_H
