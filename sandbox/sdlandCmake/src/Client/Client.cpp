@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Client.h"
+#include "glm/glm.hpp"
 
 /// <summary>
 /// Create a client object with default values. Filled in later functions

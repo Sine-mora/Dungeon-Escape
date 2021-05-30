@@ -106,9 +106,18 @@ if(WIN32)
     set(ENET_PATH ${LIBS}/enet)
         add_subdirectory(${ENET_PATH})
         target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
+        set(ENET_LIB "${ENET_PATH}/lib/x64/enet.lib")
+        set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
+
+
+	set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
+        add_subdirectory(${CLIENT_PATH})
+        
+    #Server
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/Server)
 	
     target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm)
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; client)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")

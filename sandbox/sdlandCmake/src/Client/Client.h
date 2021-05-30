@@ -2,7 +2,7 @@
 #define CLIENT_H
 
 #include "enet/enet.h"
-
+#include "glm/glm.hpp"
 
 class Client {
 	private:
@@ -19,6 +19,7 @@ class Client {
 		void SetHost();
 		bool ConnectPeer();
 		bool ConnectServer();
+		//void SendPacket();
 		void ReceiveComms(); //BEGIN GAME LOOP
 		void Disconnect(); //END GAME LOOP
 		void Shutdown();

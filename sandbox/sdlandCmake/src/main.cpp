@@ -5,6 +5,7 @@
 #include <sol.hpp>
 #include <iostream>
 #include <enet/enet.h>
+#include <Client/Client.h>
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
@@ -12,8 +13,8 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
-
-
+	
+	Client testClient;
 
 
 	//ENET
