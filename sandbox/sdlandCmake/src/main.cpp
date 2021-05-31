@@ -5,7 +5,7 @@
 #include <sol.hpp>
 #include <iostream>
 #include <enet/enet.h>
-#include <Client/Client.h>
+#include "Client.h"
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
@@ -15,7 +15,7 @@ int main(int argc, char* args[])
 {
 	
 	Client testClient;
-
+	testClient.Init();
 
 	//ENET
 	if (enet_initialize() != 0) {

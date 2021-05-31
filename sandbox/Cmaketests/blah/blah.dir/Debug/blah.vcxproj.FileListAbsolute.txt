@@ -1,2 +1,0 @@
-C:\Users\Desert Combat\Desktop\Cmaketests\blah\Debug\blah.pdb
-C:\Users\Desert Combat\Desktop\Cmaketests\blah\blah.dir\Debug\blah.pdb

@@ -109,15 +109,15 @@ if(WIN32)
         set(ENET_LIB "${ENET_PATH}/lib/x64/enet.lib")
         set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
 
-
-	set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/client)
-        add_subdirectory(${CLIENT_PATH})
+	set(CLIENT_PATH ../Client)
+        add_subdirectory(${CLIENT_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/dirs/Client)
+        target_include_directories(${BINARY} PUBLIC ${CLIENT_PATH})
         
     #Server
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/Server)
+	add_subdirectory(../Server ${CMAKE_CURRENT_SOURCE_DIR}/dirs/Server)
 	
     target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; client)
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")
@@ -140,6 +140,6 @@ if(WIN32)
 SDL_IMAGE_PATH: ${SDL_IMAGE_PATH}\n SDL_IMAGE_INCLUDE_DIRS: ${SDL2_IMAGE_INCLUDE_DIRS} \n SDL2_IMAGE_LIBRARIES: ${SDL2_IMAGE_LIBRARIES} \n EXTERN_SDL_IMAGE_PATH: ${EXTERN_SDL_IMAGE_LIBS_PATH} \n
 SDL_MIXER_PATH: ${SDL_MIXER_PATH}\n SDL_MIXER_INCLUDE_DIRS: ${SDL2_MIXER_INCLUDE_DIRS} \n SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES} \n EXTERN_SDL_MIXER_PATH: ${EXTERN_SDL_MIXER_LIBS_PATH} \n
 SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n
-[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n ENET_PATH: ${ENET_PATH} \n ENET_LIB: ${ENET_LIB} \n")
+[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n ENET_PATH: ${ENET_PATH} \n ENET_LIB: ${ENET_LIB} \n client_lib: ${client_lib}")
 
 endif(WIN32)

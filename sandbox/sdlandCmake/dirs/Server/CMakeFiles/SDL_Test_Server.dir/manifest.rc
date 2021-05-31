@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/sdlandCmake/dirs/Server/CMakeFiles/SDL_Test_Server.dir/embed.manifest"
