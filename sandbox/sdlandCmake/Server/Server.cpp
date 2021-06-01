@@ -56,11 +56,14 @@ bool Server::CreateServer() {
 //BEGIN GAME LOOP
 
 /// <summary>
-/// Main loop, where it listens for connections.
+/// Main loop, where it listens for connections every second.
 /// </summary>
 void Server::ServerListen() {
+	std::cout << "Server Listens\n";
+
 	while (true)
 	{
+
 		while (enet_host_service(m_server, &m_event, 1000) > 0)
 		{
 			switch (m_event.type)

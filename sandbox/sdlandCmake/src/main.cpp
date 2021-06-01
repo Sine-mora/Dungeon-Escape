@@ -4,8 +4,10 @@
 #include <SDL_image.h>
 #include <sol.hpp>
 #include <iostream>
+#include <string>
 #include <enet/enet.h>
 #include "Client.h"
+
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
@@ -14,8 +16,16 @@ static constexpr int SCREEN_HEIGHT = 680;
 int main(int argc, char* args[])
 {
 	
-	Client testClient;
-	testClient.Init();
+
+	Client NewClient;
+	NewClient.Init();
+	NewClient.CreateClient();
+	NewClient.SetHost();
+	NewClient.ConnectPeer();
+	NewClient.ConnectServer();
+	NewClient.ReceiveComms(); //GAME LOOP
+	NewClient.Disconnect(); //END GAME LOOP
+
 
 	//ENET
 	if (enet_initialize() != 0) {

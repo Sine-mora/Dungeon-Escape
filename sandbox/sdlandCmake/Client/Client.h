@@ -1,6 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <string>
 #include "enet/enet.h"
 #include "glm/glm.hpp"
 
@@ -19,7 +20,8 @@ class Client {
 		void SetHost();
 		bool ConnectPeer();
 		bool ConnectServer();
-		//void SendPacket();
+		//void SendPacket(const char* data);
+		//void MsgLoop();
 		void ReceiveComms(); //BEGIN GAME LOOP
 		void Disconnect(); //END GAME LOOP
 		void Shutdown();

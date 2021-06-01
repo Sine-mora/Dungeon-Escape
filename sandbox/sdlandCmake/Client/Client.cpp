@@ -88,12 +88,41 @@ bool Client::ConnectServer() {
 }
 
 //BEGIN GAME LOOP
+/*
+void Client::SendPacket(const char* data) {
+	ENetPacket* packet = enet_packet_create(data, strlen(data), ENET_PACKET_FLAG_RELIABLE);
+	enet_peer_send(m_peer, 0, packet);
+}*/
+/*
+void Client::MsgLoop() {
+	
+	while (true) 
+	{
+		ENetEvent event;
+		while (enet_host_service(m_client, &event, 0) > 0)
+		{
+			switch (event.type)
+			{
+			case ENET_EVENT_TYPE_RECEIVE:
+				printf("A packet of length %u containing %s was received from %s on channel %u.\n",
+					event.packet->dataLength,
+					event.packet->data,
+					event.peer->data,
+					event.channelID);
+
+				enet_packet_destroy(event.packet);
+				break;
+			}
+		}
+	}
+
+}*/
 
 /// <summary>
 /// Main loop, where it listens for communications
 /// </summary>
 void Client::ReceiveComms() {
-
+	
 	while (enet_host_service(m_client, &m_event, 1000) > 0)
 	{
 		switch (m_event.type)
@@ -107,7 +136,22 @@ void Client::ReceiveComms() {
 				m_event.channelID);
 			break;
 		}
-	}	
+	}
+	
+	/*
+	bool running = true;
+	std::string username;
+	std::string message;
+	std::cout << "Enter your username:";
+	std::getline(std::cin, username);
+
+	while (running) {
+		std::getline(std::cin, message);
+		std::cout << username << " : " + message << std::endl;
+
+
+		//running = false;
+	}*/
 }
 
 //END GAME LOOP
@@ -145,3 +189,19 @@ void Client::Shutdown() {
 		std::cout << "Failed deinitializing the client.\n";
 	}
 }
+
+/*
+	while (enet_host_service(m_client, &m_event, 1000) > 0)
+	{
+		switch (m_event.type)
+		{
+		case ENET_EVENT_TYPE_RECEIVE:
+			printf("A packet of length %u containing %s was received from %x:%u on channel %u.\n",
+				m_event.packet->dataLength,
+				m_event.packet->data,
+				m_event.peer->address.host,
+				m_event.peer->address.port,
+				m_event.channelID);
+			break;
+		}
+	}	*/
