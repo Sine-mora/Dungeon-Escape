@@ -1,0 +1,3 @@
+[submodule "libs/k9"]
+	path = libs/k9
+	url = https://github.com/SimoAngelov/K9
