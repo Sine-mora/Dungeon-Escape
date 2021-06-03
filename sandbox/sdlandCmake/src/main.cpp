@@ -15,7 +15,6 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 int main(int argc, char* args[])
 {
-	
 
 	Client NewClient;
 	NewClient.Init();
@@ -23,10 +22,14 @@ int main(int argc, char* args[])
 	NewClient.SetHost();
 	NewClient.ConnectPeer();
 	NewClient.ConnectServer();
-	NewClient.ReceiveComms(); //GAME LOOP
-	NewClient.Disconnect(); //END GAME LOOP
+	NewClient.ReceiveComms();//GAME LOOP
 
-
+	NewClient.SendPacket({'a','b'});
+	NewClient.MsgLoop();
+	
+	//NewClient.Disconnect(); //END GAME LOOP
+	
+/*
 	//ENET
 	if (enet_initialize() != 0) {
 		
@@ -99,5 +102,6 @@ int main(int argc, char* args[])
 	//Quit SDL subsystems
 	SDL_Quit();
 
+	*/
 	return 0;
 }

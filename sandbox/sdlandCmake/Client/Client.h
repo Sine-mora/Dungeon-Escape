@@ -12,7 +12,15 @@ class Client {
 		ENetEvent m_event;
 		ENetPeer* m_peer; 
 
+		struct points {
+			char x;
+			char y;
+		}data;
+
 	public:
+
+
+
 		Client();
 		~Client();
 		bool Init();
@@ -20,8 +28,8 @@ class Client {
 		void SetHost();
 		bool ConnectPeer();
 		bool ConnectServer();
-		//void SendPacket(const char* data);
-		//void MsgLoop();
+		void SendPacket(const points& data);
+		void MsgLoop();
 		void ReceiveComms(); //BEGIN GAME LOOP
 		void Disconnect(); //END GAME LOOP
 		void Shutdown();

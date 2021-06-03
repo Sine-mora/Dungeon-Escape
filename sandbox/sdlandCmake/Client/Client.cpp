@@ -88,12 +88,13 @@ bool Client::ConnectServer() {
 }
 
 //BEGIN GAME LOOP
-/*
-void Client::SendPacket(const char* data) {
-	ENetPacket* packet = enet_packet_create(data, strlen(data), ENET_PACKET_FLAG_RELIABLE);
+
+
+void Client::SendPacket(const points& data) {
+	ENetPacket* packet = enet_packet_create(&data, sizeof(data), ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(m_peer, 0, packet);
-}*/
-/*
+}
+
 void Client::MsgLoop() {
 	
 	while (true) 
@@ -116,7 +117,7 @@ void Client::MsgLoop() {
 		}
 	}
 
-}*/
+}
 
 /// <summary>
 /// Main loop, where it listens for communications
@@ -163,7 +164,7 @@ void Client::Disconnect() {
 	
 	enet_peer_disconnect(m_peer, 0);
 
-	while (enet_host_service(m_client, &m_event, 3000) > 0)
+	while (enet_host_service(m_client, &m_event, 1000) > 0)
 	{
 		switch (m_event.type)
 		{

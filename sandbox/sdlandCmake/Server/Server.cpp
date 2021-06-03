@@ -53,17 +53,16 @@ bool Server::CreateServer() {
 	return EXIT_SUCCESS;
 }
 
-//BEGIN GAME LOOP
+void Server::ParseData() {
+	
+}
 
 /// <summary>
 /// Main loop, where it listens for connections every second.
 /// </summary>
 void Server::ServerListen() {
-	std::cout << "Server Listens\n";
-
 	while (true)
 	{
-
 		while (enet_host_service(m_server, &m_event, 1000) > 0)
 		{
 			switch (m_event.type)
@@ -74,12 +73,8 @@ void Server::ServerListen() {
 					m_event.peer->address.port);
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
-				printf("A packet of length %u containing %s was received from %x:%u on channel %u.\n",
-					m_event.packet->dataLength,
-					m_event.packet->data,
-					m_event.peer->address.host,
-					m_event.peer->address.port,
-					m_event.channelID);
+				std::cout << "\nA packet of length " << m_event.packet->dataLength << " containing \"" << m_event.packet->data << "\" was received from " <<
+					m_event.peer->address.host << " : " << m_event.peer->address.port << " on channel " << static_cast<int>(m_event.channelID) << std::endl;
 				break;
 			case ENET_EVENT_TYPE_DISCONNECT:
 				printf("%x:%u disconnected.\n",

@@ -14,6 +14,7 @@ class Server {
 		bool ServerInit();
 		bool CreateServer();
 		void ServerListen();
+		void ParseData();
 		void ServerShutdown();
 };
 #endif // !SERVER_H
