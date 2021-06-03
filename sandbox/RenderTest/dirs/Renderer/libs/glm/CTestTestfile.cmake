@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
 # Source directory: C:/Users/Desert Combat/source/repos/DungeonEscape/libs/k9/examples/ImGui_Example/Renderer/libs/glm
-# Build directory: C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/RenderExample/dirs/Renderer/libs/glm
+# Build directory: C:/Users/Desert Combat/source/repos/DungeonEscape/sandbox/RenderTest/dirs/Renderer/libs/glm
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

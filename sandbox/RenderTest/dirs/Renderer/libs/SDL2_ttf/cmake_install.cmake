@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Desert Combat/source/repos/DungeonEscape/libs/k9/examples/ImGui_Example/Renderer/libs/SDL2_image
+# Install script for directory: C:/Users/Desert Combat/source/repos/DungeonEscape/libs/k9/examples/ImGui_Example/Renderer/libs/SDL2_ttf
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
