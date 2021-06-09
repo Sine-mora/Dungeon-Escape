@@ -77,18 +77,6 @@ void Server::ServerListen() {
 			{
 				std::cout << "\nA packet of length " << m_event.packet->dataLength << " containing \"" << (points*)m_event.packet->data << "\" was received from " <<
 					m_event.peer->address.host << " : " << m_event.peer->address.port << " on channel " << static_cast<int>(m_event.channelID) << std::endl;
-
-
-				uint8_t hexValue;
-
-				hexValue = BytesToInt
-
-				char test[] = {
-					m_event.packet->dataLength,
-					
-				};
-
-
 				break;
 			}
 			case ENET_EVENT_TYPE_DISCONNECT:

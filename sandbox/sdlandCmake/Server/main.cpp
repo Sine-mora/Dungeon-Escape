@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Server.h"
 
-int main() {
+int main(int argc, char* args[]) {
 
 	std::cout << "-== Server ON ==-\n";
 

@@ -121,7 +121,7 @@ if(WIN32)
         target_include_directories(${BINARY} PUBLIC ${SERIALIZE_PATH})
 	
     target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; serialize)
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; serialize_lib)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")
