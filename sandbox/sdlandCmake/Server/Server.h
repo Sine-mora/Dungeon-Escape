@@ -9,6 +9,12 @@ class Server {
 		ENetHost* m_server; // Creates a host(server) for communicating to peers. 
 		ENetEvent m_event;
 	public:
+
+		struct points {
+			int x;
+			int y;
+		}pointData;
+
 		Server();
 		~Server();
 		bool ServerInit();

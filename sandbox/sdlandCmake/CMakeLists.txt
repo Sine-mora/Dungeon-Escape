@@ -115,9 +115,13 @@ if(WIN32)
         
     #Server
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Server)
+
+	set(SERIALIZE_PATH ${LIBS}/Serialization)
+        add_subdirectory(${SERIALIZE_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SERIALIZE_PATH})
 	
     target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib)
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; serialize)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")

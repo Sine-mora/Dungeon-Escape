@@ -7,14 +7,18 @@
 #include <string>
 #include <enet/enet.h>
 #include "Client.h"
-
+#include "serialization.h"
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
 static constexpr int SCREEN_HEIGHT = 680;
 
+
+
 int main(int argc, char* args[])
 {
+
+	SerialDeserial::serialize("test");
 
 	Client NewClient;
 	NewClient.Init();
@@ -23,9 +27,13 @@ int main(int argc, char* args[])
 	NewClient.ConnectPeer();
 	NewClient.ConnectServer();
 	NewClient.ReceiveComms();//GAME LOOP
-
-	NewClient.SendPacket({'a','b'});
+	
+	NewClient.data.x = 5;
+	NewClient.data.y = 6;
+	NewClient.SendPacket(NewClient.data);
 	NewClient.MsgLoop();
+
+
 	
 	//NewClient.Disconnect(); //END GAME LOOP
 	

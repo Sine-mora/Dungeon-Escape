@@ -12,13 +12,14 @@ class Client {
 		ENetEvent m_event;
 		ENetPeer* m_peer; 
 
-		struct points {
-			char x;
-			char y;
-		}data;
+
 
 	public:
 
+		struct points {
+			int x;
+			int y;
+		}data;
 
 
 		Client();
