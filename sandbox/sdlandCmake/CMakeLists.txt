@@ -109,19 +109,19 @@ if(WIN32)
         set(ENET_LIB "${ENET_PATH}/lib/x64/enet.lib")
         set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
 
-	set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Client)
+    set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Client)
         add_subdirectory(${CLIENT_PATH})
         target_include_directories(${BINARY} PUBLIC ${CLIENT_PATH})
         
     #Server
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Server)
 
-	set(SERIALIZE_PATH ${LIBS}/Serialization)
-        add_subdirectory(${SERIALIZE_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SERIALIZE_PATH})
+    set(SERIALIZEABLE_PATH ${LIBS}/Serializable)
+        add_subdirectory(${SERIALIZEABLE_PATH})
+        target_include_directories(${BINARY} PUBLIC ${SERIALIZEABLE_PATH}/src)
 	
     target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; serialize_lib)
+    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; Serializable)
 
     #Copy the lua53.dll 	
     post_build_copy("${LUA_PATH}/lua53.dll")

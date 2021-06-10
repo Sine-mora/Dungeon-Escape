@@ -24,6 +24,6 @@ set(HEADER_FILES
 # Create executable BINARY
 add_executable(${BINARY}_Server ${HEADER_FILES} ${SOURCE_FILES})
 
-target_include_directories(${BINARY}_Server PUBLIC ${ENET_PATH}/include)
+target_include_directories(${BINARY}_Server PUBLIC "${ENET_PATH}/include ${SERIALIZEABLE_PATH}/src")
 
-target_link_libraries(${BINARY}_Server PUBLIC ${ENET_X64_WS2_WINM})
+target_link_libraries(${BINARY}_Server PUBLIC ${ENET_X64_WS2_WINM}; Serializable)

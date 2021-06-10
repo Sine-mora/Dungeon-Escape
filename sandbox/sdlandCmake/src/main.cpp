@@ -7,7 +7,8 @@
 #include <string>
 #include <enet/enet.h>
 #include "Client.h"
-#include "Serializable.h"
+#include "Person.h"
+#include "Point.h"
 
 //Screen dimension constants
 static constexpr int SCREEN_WIDTH = 680;
@@ -16,7 +17,40 @@ static constexpr int SCREEN_HEIGHT = 680;
 
 
 int main(int argc, char* args[])
-{
+{/*
+	std::cout << "Hello world\n";
+	Person person("Kakashi", 234, 79.4);
+	person.Print();
+
+	std::vector<char> buff;
+	buff.reserve(person.GetSize());
+	person.Serialize(buff.data());
+
+	std::cout << " person.GetSize(): " << person.GetSize()
+		<< " strlen(buff): " << sizeof(buff) << '\n';
+
+	Person person2;
+	person2.Deserialize(buff.data());
+
+	std::cout << " after deserializing person 2 is ";
+	person2.Print();
+	*/
+	Point pOne(2, 5);
+	pOne.Print();
+	std::vector<char> buff;
+	buff.reserve(pOne.GetSize());
+	pOne.Serialize(buff.data());
+
+	std::cout << "\npoint.GetSize(): " << pOne.GetSize()
+		<< "strlen(buff): " << sizeof(buff) << '\n';
+	
+	Point pTwo;
+	pTwo.Deserialize(buff.data());
+
+	std::cout << "\nAfter deserializing point 2 is: " << std::endl;
+	pTwo.Print();
+
+	/*
 	Person testSer;
 
 	char* dataIn = "Testing";
@@ -28,20 +62,20 @@ int main(int argc, char* args[])
 	Person testDes;
 	testDes.deserialize(dataIn);
 	delete[] dataIn;
+	*/
 
-
-//Client NewClient;
-//NewClient.Init();
-//NewClient.CreateClient();
-//NewClient.SetHost();
-//NewClient.ConnectPeer();
-//NewClient.ConnectServer();
-//NewClient.ReceiveComms();//GAME LOOP
-//
-//NewClient.data.x = 5;
-//NewClient.data.y = 6;
-//NewClient.SendPacket(NewClient.data);
-//NewClient.MsgLoop();
+	Client NewClient;
+	NewClient.Init();
+	NewClient.CreateClient();
+	NewClient.SetHost();
+	NewClient.ConnectPeer();
+	NewClient.ConnectServer();
+	NewClient.ReceiveComms();//GAME LOOP
+	
+	NewClient.data.x = 5;
+	NewClient.data.y = 6;
+	NewClient.SendPacket(NewClient.data);
+	NewClient.MsgLoop();
 
 
 	

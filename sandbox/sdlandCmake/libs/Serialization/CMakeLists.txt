@@ -1,1 +1,0 @@
-add_library (serialize_lib "Serializable.h" "Serializable.cpp")
