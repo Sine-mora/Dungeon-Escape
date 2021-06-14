@@ -90,10 +90,13 @@ bool Client::ConnectServer() {
 }
 
 //BEGIN GAME LOOP
+void Client::SendPacket(const Point& data)
+{
+	std::vector<uint8_t> buff;
+	buff.reserve(data.GetSize());
+	data.Serialize(buff.data());
 
-
-void Client::SendPacket(const Point& data) {
-	ENetPacket* packet = enet_packet_create(&data, sizeof(data), ENET_PACKET_FLAG_RELIABLE);
+	ENetPacket* packet = enet_packet_create(buff.data(), data.GetSize(), ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(m_peer, 0, packet);
 }
 
@@ -125,8 +128,7 @@ void Client::MsgLoop() {
 				buff = std::vector<uint8_t>(SerializedData, SerializedData + event.packet->dataLength);
 				data.Deserialize(buff.data());
 
-				std::cout << " " << data.GetSize() << data.GetPointX() << data.GetPointY();
-
+				std::cout << " " << data.GetSize() << data.GetPointX() << data.GetPointY() << std::endl;
 				enet_packet_destroy(event.packet);
 				break;
 			}

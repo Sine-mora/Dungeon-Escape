@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <enet/enet.h>
+#include "Serializable.h"
 #include "Client.h"
 #include "Person.h"
 #include "Point.h"
@@ -41,6 +42,7 @@ int main(int argc, char* args[])
 	buff.reserve(pOne.GetSize());
 	pOne.Serialize(buff.data());
 
+
 	std::cout << "\npoint.GetSize(): " << pOne.GetSize()
 		<< " strlen(buff): " << sizeof(buff) << '\n';
 	
@@ -50,6 +52,8 @@ int main(int argc, char* args[])
 	std::cout << "\nAfter deserializing point 2 is: " << std::endl;
 	pTwo.Print();
 	
+	//std::cout << "\n print out buffer: ";
+	//SerializablePOD<uint8_t>::PrintVector(buff);
 
 	Client NewClient;
 	NewClient.Init();

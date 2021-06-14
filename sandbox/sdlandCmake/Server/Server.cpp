@@ -91,6 +91,8 @@ void Server::ServerListen() {
 
 				std::cout << "\n Deserialized data size: " << data.GetPointX() << " " << data.GetPointY() << std::endl;		
 				data.Print();
+				//std::cout << " print out buffer: ";
+				//SerializablePOD<uint8_t>::PrintVector(buff);
 				break;
 
 			}
