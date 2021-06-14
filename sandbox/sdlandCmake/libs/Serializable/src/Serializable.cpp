@@ -14,46 +14,51 @@ void ISerializable::WriteCString(char*& target, const std::string& source)
 }
 
 template <typename POD>
+void SerializablePOD<POD>::PrintVector(const std::vector<uint8_t>& vec) {
+    std::cout << "Vec size : " << vec.size();
+    uint32_t uintcounter = 0;
+    for (const auto somebyte : vec) {
+        std::cout << "byte[" << uintcounter << "] : " << static_cast<uint32_t>(somebyte) << '\n';
+        uintcounter++;
+    }
+
+}
+template <typename POD>
 size_t SerializablePOD<POD>::GetSize(POD str)
 {
     return sizeof(POD);
 }
-
 template <typename POD>
-char* SerializablePOD<POD>::Serialize(char* target, POD value)
+uint8_t* SerializablePOD<POD>::Serialize(uint8_t* target, POD value)
 {
     memcpy(target, &value, GetSize(value));
     target += GetSize(value);
     return target;
 }
-
 template <typename POD>
-const char* SerializablePOD<POD>::Deserialize(const char* source, POD& target)
+const uint8_t* SerializablePOD<POD>::Deserialize(const uint8_t* source, POD& target)
 {
     memcpy(&target, source, GetSize(target));
     source += GetSize(target);
     return source;
 }
-
 template<>
-size_t SerializablePOD<char*>::GetSize(char* str)
+size_t SerializablePOD<uint8_t*>::GetSize(uint8_t* str)
 {
-    return sizeof(size_t) + strlen(str) + 1;
+    return sizeof(size_t) + sizeof(str) + 1;
 }
-
 template<>
-char* SerializablePOD<char*>::Serialize(char* target, char* value)
+uint8_t* SerializablePOD<uint8_t*>::Serialize(uint8_t* target, uint8_t* value)
 {
-    size_t length = strlen(value) + 1;
+    size_t length = sizeof(value) + 1;
     target = SerializablePOD<size_t>::Serialize(target, length);
 	value[length] = '\0';
     memcpy(target, value, length);
     target += length;
     return target;
 }
-
 template<>
-const char* SerializablePOD<char*>::Deserialize(const char* source, char*& target)
+const uint8_t* SerializablePOD<uint8_t*>::Deserialize(const uint8_t* source, uint8_t*& target)
 {
     size_t length;
     memcpy( &length, source, sizeof(size_t) );
@@ -62,16 +67,13 @@ const char* SerializablePOD<char*>::Deserialize(const char* source, char*& targe
     source += length;
     return source;
 }
-
-
 template<>
 size_t SerializablePOD<std::string>::GetSize(std::string str)
 {
     return sizeof(size_t) + str.length();
 }
-
 template<>
-char* SerializablePOD<std::string>::Serialize(char* target, std::string value)
+uint8_t* SerializablePOD<std::string>::Serialize(uint8_t* target, std::string value)
 {
     size_t length = value.length();
     target = SerializablePOD<size_t>::Serialize(target, length);
@@ -79,9 +81,8 @@ char* SerializablePOD<std::string>::Serialize(char* target, std::string value)
     target += length;
     return target;
 }
-
 template<>
-const char* SerializablePOD<std::string>::Deserialize(const char* source, std::string& target)
+const uint8_t* SerializablePOD<std::string>::Deserialize(const uint8_t* source, std::string& target)
 {
     size_t length;
     memcpy( &length, source, sizeof(size_t) );
@@ -98,6 +99,6 @@ const char* SerializablePOD<std::string>::Deserialize(const char* source, std::s
 
 // Explicit instantiation of used types
 template class SerializablePOD<std::string>;
-template class SerializablePOD<char*>;
-template class SerializablePOD<int>;
+template class SerializablePOD<uint8_t*>;
+template class SerializablePOD<uint32_t>;
 template class SerializablePOD<float>;

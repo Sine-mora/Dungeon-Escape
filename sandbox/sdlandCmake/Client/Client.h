@@ -4,6 +4,8 @@
 #include <string>
 #include "enet/enet.h"
 #include "glm/glm.hpp"
+#include "Serializable/src/Point.h"
+#include "Serializable/src/Person.h"
 
 class Client {
 	private:
@@ -11,16 +13,10 @@ class Client {
 		ENetAddress m_address; // The address of the server to which it connects
 		ENetEvent m_event;
 		ENetPeer* m_peer; 
-
-
+	
+		Point data;
 
 	public:
-
-		struct points {
-			int x;
-			int y;
-		}data;
-
 
 		Client();
 		~Client();
@@ -29,7 +25,7 @@ class Client {
 		void SetHost();
 		bool ConnectPeer();
 		bool ConnectServer();
-		void SendPacket(const points& data);
+		void SendPacket(const Point& data);
 		void MsgLoop();
 		void ReceiveComms(); //BEGIN GAME LOOP
 		void Disconnect(); //END GAME LOOP

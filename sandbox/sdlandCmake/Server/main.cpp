@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Server.h"
-#include "Point.h"
+#include "Serializable/src/Point.h"
 
 int main(int argc, char* args[]) {
 

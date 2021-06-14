@@ -9,8 +9,8 @@ public:
 
     // ISerializable interface
     virtual size_t GetSize() const final;
-    virtual void Serialize(char* dataOut) const final;
-    virtual void Deserialize(const char* dataIn) final;
+    virtual void Serialize(uint8_t* dataOut) const final;
+    virtual void Deserialize(const uint8_t* dataIn) final;
 
     void Print();
 

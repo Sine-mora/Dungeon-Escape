@@ -24,6 +24,13 @@ set(HEADER_FILES
 # Create executable BINARY
 add_executable(${BINARY}_Server ${HEADER_FILES} ${SOURCE_FILES})
 
-target_include_directories(${BINARY}_Server PUBLIC "${ENET_PATH}/include ${SERIALIZEABLE_PATH}/src")
+#######
+# Include libs folder.
+#set(LIBS ../libs/Serializable ${CMAKE_CURRENT_SOURCE_DIR}/dirs)
+target_include_directories(${BINARY} PUBLIC ${LIBS})
 
+# Link Serializable library.
+#add_subdirectory(${LIBS}/Serializable)
+target_include_directories(${BINARY}_Server PUBLIC ${ENET_PATH}/include ${LIBS}/Serializable/src)
 target_link_libraries(${BINARY}_Server PUBLIC ${ENET_X64_WS2_WINM}; Serializable)
+

@@ -66,6 +66,10 @@ void Server::ServerListen() {
 	{ 
 		while (enet_host_service(m_server, &m_event, 1000) > 0)
 		{
+			enet_uint8* receivedData;
+			uint8_t* SerializedData;
+			std::vector<uint8_t> buff;
+
 			switch (m_event.type)
 			{
 			case ENET_EVENT_TYPE_CONNECT:
@@ -75,9 +79,20 @@ void Server::ServerListen() {
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
 			{
-				std::cout << "\nA packet of length " << m_event.packet->dataLength << " containing \"" << (points*)m_event.packet->data << "\" was received from " <<
+				std::cout << "\nA packet of length " << m_event.packet->dataLength << " containing \"" << m_event.packet->data << "\" was received from " <<
 					m_event.peer->address.host << " : " << m_event.peer->address.port << " on channel " << static_cast<int>(m_event.channelID) << std::endl;
+
+				receivedData = m_event.packet->data;
+				SerializedData = reinterpret_cast<uint8_t*>(receivedData);
+
+				buff.reserve(m_event.packet->dataLength);
+				buff = std::vector<uint8_t>(SerializedData, SerializedData + m_event.packet->dataLength);
+				data.Deserialize(SerializedData);
+
+				std::cout << "\n Deserialized data size: " << data.GetPointX() << " " << data.GetPointY() << std::endl;		
+				data.Print();
 				break;
+
 			}
 			case ENET_EVENT_TYPE_DISCONNECT:
 				printf("%x:%u disconnected.\n",

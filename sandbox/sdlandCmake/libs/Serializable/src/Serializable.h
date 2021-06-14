@@ -11,8 +11,8 @@ class ISerializable
 {
 public:
     virtual size_t GetSize() const = 0;
-    virtual void Serialize(char* dataOut) const = 0;
-    virtual void Deserialize(const char* dataIn) = 0;
+    virtual void Serialize(uint8_t* dataOut) const = 0;
+    virtual void Deserialize(const uint8_t* dataIn) = 0;
 
     void WriteCString(char*& target, const std::string& source);
 };
@@ -22,31 +22,22 @@ class SerializablePOD
 {
 public:
     static size_t GetSize(POD str);
-    static char* Serialize(char* target, POD value);
-    static const char* Deserialize(const char* source, POD& target);
+    static uint8_t* Serialize(uint8_t* target, POD value);
+    static const uint8_t* Deserialize(const uint8_t* source, POD& target);
+    static void PrintVector(const std::vector<uint8_t>& vec);
 };
 
 template<>
-size_t SerializablePOD<char*>::GetSize(char* str);
+size_t SerializablePOD<uint8_t*>::GetSize(uint8_t* str);
 
 template<>
-char* SerializablePOD<char*>::Serialize(char* target, char* value);
+uint8_t* SerializablePOD<uint8_t*>::Serialize(uint8_t* target, uint8_t* value);
 
 template<>
-const char* SerializablePOD<char*>::Deserialize(const char* source, char*& target);
-
-template<>
-size_t SerializablePOD<std::string>::GetSize(std::string str);
-
-template<>
-char* SerializablePOD<std::string>::Serialize(char* target, std::string value);
-
-template<>
-const char* SerializablePOD<std::string>::Deserialize(const char* source, std::string& target);
-
+const uint8_t* SerializablePOD<uint8_t*>::Deserialize(const uint8_t* source, uint8_t*& target);
 
 // Explicit instantiation of used types
 extern template class SerializablePOD<std::string>;
-extern template class SerializablePOD<char*>;
-extern template class SerializablePOD<int>;
+extern template class SerializablePOD<uint8_t*>;
+extern template class SerializablePOD<uint32_t>;
 extern template class SerializablePOD<float>;

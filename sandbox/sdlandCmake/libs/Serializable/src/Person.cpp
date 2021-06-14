@@ -16,14 +16,14 @@ size_t Person::GetSize() const
             SerializablePOD<float>::GetSize(m_fWeight);
 }
 
-void Person::Serialize(char* dataOut) const
+void Person::Serialize(uint8_t* dataOut) const
 {
     dataOut = SerializablePOD<std::string>::Serialize(dataOut, m_strName);
     dataOut = SerializablePOD<int>::Serialize(dataOut, m_nAge);
     dataOut = SerializablePOD<float>::Serialize(dataOut, m_fWeight);
 }
 
-void Person::Deserialize(const char* dataIn)
+void Person::Deserialize(const uint8_t* dataIn)
 {
     dataIn = SerializablePOD<std::string>::Deserialize(dataIn, m_strName);
     dataIn = SerializablePOD<int>::Deserialize(dataIn, m_nAge);

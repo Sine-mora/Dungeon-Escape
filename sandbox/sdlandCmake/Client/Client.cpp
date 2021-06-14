@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Client.h"
 #include "glm/glm.hpp"
+#include "Serializable/src/Point.h"
+#include "Serializable/src/Person.h"
 
 /// <summary>
 /// Create a client object with default values. Filled in later functions
@@ -90,7 +92,7 @@ bool Client::ConnectServer() {
 //BEGIN GAME LOOP
 
 
-void Client::SendPacket(const points& data) {
+void Client::SendPacket(const Point& data) {
 	ENetPacket* packet = enet_packet_create(&data, sizeof(data), ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(m_peer, 0, packet);
 }
@@ -102,14 +104,28 @@ void Client::MsgLoop() {
 		ENetEvent event;
 		while (enet_host_service(m_client, &event, 0) > 0)
 		{
+				
+			enet_uint8* receivedData;
+			char* SerializedData;
+			std::vector<uint8_t> buff;
+			
 			switch (event.type)
 			{
 			case ENET_EVENT_TYPE_RECEIVE:
 				printf("A packet of length %u containing %s was received from %s on channel %u.\n",
-					event.packet->dataLength,
-					event.packet->data,
-					event.peer->data,
-					event.channelID);
+					m_event.packet->dataLength,
+					m_event.packet->data,
+					m_event.peer->data,
+					m_event.channelID);
+			
+				receivedData = event.packet->data;
+				SerializedData = reinterpret_cast<char*>(receivedData);
+				buff.reserve(m_event.packet->dataLength);
+
+				buff = std::vector<uint8_t>(SerializedData, SerializedData + event.packet->dataLength);
+				data.Deserialize(buff.data());
+
+				std::cout << " " << data.GetSize() << data.GetPointX() << data.GetPointY();
 
 				enet_packet_destroy(event.packet);
 				break;
