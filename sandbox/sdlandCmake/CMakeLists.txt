@@ -65,80 +65,30 @@ set(LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${LIBS})
 
+  set(IMGUI_EXAMPLE_PATH ../../libs/k9/examples/ImGui_Example/Renderer)
+  message(STATUS "[INFO] IMGUI_EXAMPLE_PATH: ${IMGUI_EXAMPLE_PATH}")
+
 if(UNIX)
     find_package(SDL2 REQUIRED)
     target_link_libraries(${BINARY} PUBLIC SDL2)
 endif(UNIX)
 if(WIN32)
 	
-    set(SDL_PATH ${LIBS}/SDL2)
-	    add_subdirectory(${SDL_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
-
-    set(SDL_IMAGE_PATH ${LIBS}/SDL2_image)
-        add_subdirectory(${SDL_IMAGE_PATH})
-	    target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
-
-    set(SDL_MIXER_PATH ${LIBS}/SDL2_mixer)
-        add_subdirectory(${SDL_MIXER_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
-
-    set(SDL2_TTF_PATH ${LIBS}/SDL2_ttf)
-        add_subdirectory(${SDL2_TTF_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
-
-    set(LUA_PATH ${LIBS}/lua)
-        add_subdirectory(${LUA_PATH})
-        target_include_directories(${BINARY} PUBLIC ${LUA_INCLUDE_DIRS})
-	
-    set(SOL_PATH ${LIBS}/sol)
-        add_subdirectory(${SOL_PATH})
-	    target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
-	
-    set(GLM_PATH ${LIBS}/glm)
-        add_subdirectory(${GLM_PATH})
+    set(GLM_PATH ${IMGUI_EXAMPLE_PATH}/libs/glm)
+        add_subdirectory(${GLM_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/dirs/glm)
 	    target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
 	
-    set(IMGUI_PATH ${LIBS}/imgui)
-        add_subdirectory(${IMGUI_PATH})
+    set(IMGUI_PATH ${IMGUI_EXAMPLE_PATH}/libs/imgui)
+        add_subdirectory(${IMGUI_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/dirs/imgui)
 	    target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
-
-    set(ENET_PATH ${LIBS}/enet)
-        add_subdirectory(${ENET_PATH})
-        target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
-        set(ENET_LIB "${ENET_PATH}/lib/x64/enet.lib")
-        set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
-
-    set(CLIENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Client)
-        add_subdirectory(${CLIENT_PATH})
-        target_include_directories(${BINARY} PUBLIC ${CLIENT_PATH})
-        
-    #Server
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Server)
 
     set(SERIALIZEABLE_PATH ${LIBS}/Serializable)
         add_subdirectory(${SERIALIZEABLE_PATH})
         target_include_directories(${BINARY} PUBLIC ${SERIALIZEABLE_PATH}/src)
+
+
 	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES};
-    ${SDL2_TTF_LIBRARIES}; ${ENET_X64_WS2_WINM}; lua_lib; imgui; glm; enet; SDL_Test_lib; Serializable)
-
-    #Copy the lua53.dll 	
-    post_build_copy("${LUA_PATH}/lua53.dll")
-
-    #Copy the SDL2.dll 	
-    post_build_copy("${EXTERN_SDL_LIBS_PATH}/SDL2.dll")
-
-    #Copy the SDL Image dlls
-    post_build_copy("${EXTERN_SDL_IMAGE_LIBS_PATH}/SDL2_image.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libjpeg-9.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libpng16-16.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libtiff-5.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libwebp-7.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/zlib1.dll")
-
-    #Copy the SDL Mixer dlls
-    post_build_copy("${EXTERN_SDL_MIXER_LIBS_PATH}/SDL2_mixer.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libFLAC-8.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libmodplug-1.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libmpg123-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libogg-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libopus-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libopusfile-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libvorbis-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libvorbisfile-3.dll;")
-
-    #Copy the SDL TTF dlls
-    post_build_copy("${EXTERN_SDL_TTF_LIBS_PATH}/SDL2_ttf.dll;${EXTERN_SDL_TTF_LIBS_PATH}/libfreetype-6.dll;${EXTERN_SDL_TTF_LIBS_PATH}/zlib1.dll")
-	
-	#End of copy
+    target_link_libraries(${BINARY} PUBLIC imgui; glm; Serializable)
 
     message(STATUS "[INFO] ${BINARY} SDL_PATH: ${SDL_PATH}\n SDL_INCLUDE_DIRS:  ${SDL2_INCLUDE_DIRS} \n SDL2_LIBRARIES: ${SDL2_LIBRARIES} \n EXTERN_SDL_LIBS_PATH: ${EXTERN_SDL_LIBS_PATH} \n
 SDL_IMAGE_PATH: ${SDL_IMAGE_PATH}\n SDL_IMAGE_INCLUDE_DIRS: ${SDL2_IMAGE_INCLUDE_DIRS} \n SDL2_IMAGE_LIBRARIES: ${SDL2_IMAGE_LIBRARIES} \n EXTERN_SDL_IMAGE_PATH: ${EXTERN_SDL_IMAGE_LIBS_PATH} \n
