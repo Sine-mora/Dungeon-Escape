@@ -1,3 +1,4 @@
+#Serializable Cmake
 cmake_minimum_required(VERSION 3.7.2)
 
 # Specify C++14 as the standard.
@@ -41,4 +42,4 @@ file(GLOB SERIALIZABLE_SOURCES ${SRC_PATH}/Serializable.h      # ${SOURCE_FILES}
                                 ${SRC_PATH}/Point.cpp)
 message(STATUS "lib src: ${SRC_PATH} : sources: ${SERIALIZABLE_SOURCES}")
 
-add_library(Serializable ${SERIALIZABLE_SOURCES})
+add_library(Serializable_lib ${SERIALIZABLE_SOURCES})
