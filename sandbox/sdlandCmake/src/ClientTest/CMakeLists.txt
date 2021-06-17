@@ -32,8 +32,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         ${CMAKE_CURRENT_BINARY_DIR})                        
 endfunction()
 
-set(LIBS ../../libs)
-
 set(SRC_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${LIBS}/Client/Client.cpp)
@@ -61,16 +59,16 @@ if(WIN32)
     target_include_directories(${BINARY} PUBLIC K9_Renderer_include_list)
     target_link_libraries(${BINARY} PUBLIC K9_Renderer) 
 
-   set(CLIENT_PATH ${LIBS}/Client)
-        add_subdirectory(${CLIENT_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/Client)
-        target_include_directories(${BINARY} PUBLIC ${CLIENT_PATH})
+   set(CLIENT_LIB_PATH ${LIBS}/Client)
+        add_subdirectory(${CLIENT_LIB_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/Client)
+        target_include_directories(${BINARY} PUBLIC ${CLIENT_LIB_PATH})
 
     set(SERIALIZABLE_PATH ${LIBS}/Serializable/src)
         target_include_directories(${BINARY} PUBLIC ${SERIALIZABLE_PATH})
 
     set(ENET_PATH ${LIBS}/enet)
      #ENet needed libs for Windows
-    set(ENET_LIB "${ENET_PATH}/lib/x64/enet.lib")
+    set(ENET_LIB "${ENET_PATH}/lib/x64/enet")
     set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
         target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
 
@@ -80,7 +78,7 @@ if(WIN32)
     set(LUA_PATH ${LIBS}/lua)
         target_include_directories(${BINARY} PUBLIC ${LUA_PATH}/include)
 
-        target_link_libraries(${BINARY} PUBLIC ${ENET_X64_WS2_WINM}; enet; lua_lib)
+        target_link_libraries(${BINARY} PUBLIC ${ENET_X64_WS2_WINM}; lua_lib)
 
 
 
@@ -91,3 +89,15 @@ SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \
 [include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n ENET_PATH: ${ENET_PATH} \n ENET_LIB: ${ENET_LIB} \n client_lib: ${client_lib}")
 
 endif(WIN32)
+
+copy_assets("${K9_ASSET_TARGET}"
+			"${K9_ASSET_DEPENDENCY}"
+			"${K9_ASSET_COPY_SCRIPT_PATH}"
+			"${K9_ASSET_FOLDER_TO_COPY}"
+			"${CMAKE_CURRENT_BINARY_DIR}")
+message(status "Client K9_LIBS_TO_COPY: ${K9_LIBS_TO_COPY}")
+copy_asset_list("${K9_LIB_TARGET}"
+			"${K9_LIB_DEPENDENCY}"
+			"${K9_LIB_COPY_SCRIPT_PATH}"
+			"${K9_LIBS_TO_COPY}"
+			"${CMAKE_CURRENT_BINARY_DIR}")

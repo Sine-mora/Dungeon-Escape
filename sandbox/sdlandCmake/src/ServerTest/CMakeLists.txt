@@ -31,4 +31,28 @@ add_executable(${BINARY} ${HEADER_FILES} ${SRC_FILES})
     target_link_libraries(${BINARY} PUBLIC K9_Renderer) 
 
 target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include ${LIBS}/Serializable/src)
-target_link_libraries(${BINARY} PUBLIC ${ENET_X64_WS2_WINM}; K9_Renderer)
+
+    set(ENET_PATH ${LIBS}/enet)
+     #ENet needed libs for Windows
+    set(ENET_LIB "${ENET_PATH}/lib/x64/enet")
+    set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
+        target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
+
+
+ set(SERVER_LIB_PATH ${LIBS}/Server)
+        add_subdirectory(${SERVER_LIB_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/Server)
+        target_include_directories(${BINARY} PUBLIC ${SERVER_LIB_PATH})
+
+    set(SERIALIZABLE_PATH ${LIBS}/Serializable/src)
+        target_include_directories(${BINARY} PUBLIC ${SERIALIZABLE_PATH})
+
+
+    set(SOL_PATH ${LIBS}/sol)
+	   target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
+
+    set(LUA_PATH ${LIBS}/lua)
+        target_include_directories(${BINARY} PUBLIC ${LUA_PATH}/include)
+
+
+
+target_link_libraries(${BINARY} PUBLIC ${ENET_X64_WS2_WINM}; K9_Renderer; lua_lib)

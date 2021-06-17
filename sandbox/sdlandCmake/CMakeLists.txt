@@ -28,24 +28,28 @@ ENDMACRO()
 set(IMGUI_EXAMPLE_PATH ../../libs/k9/examples/ImGui_Example)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
-   
 
+#Add Renderer
 add_subdirectory(${IMGUI_EXAMPLE_PATH}/Renderer ${CMAKE_CURRENT_SOURCE_DIR}/Renderer)
+
+#Add ENet
+    set(ENET_PATH ${LIBS}/enet)
+     #ENet needed libs for Windows
+    set(ENET_LIB "${ENET_PATH}/lib/x64/enet")
+    set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
+    add_subdirectory(${LIBS}/enet)
 
 #Add ClientTest and Client_lib
     add_subdirectory(${SRC_DIR}/ClientTest)
     add_subdirectory(${LIBS}/Client)
     
 #Add ServerTest and Server_lib
-set(SERVER_PATH ${LIBS}/Server)
     add_subdirectory(${SRC_DIR}/ServerTest)
+set(SERVER_PATH ${LIBS}/Server)  
     add_subdirectory(${SERVER_PATH})
 
 #Add Serializable/Point/Person
     add_subdirectory(${LIBS}/Serializable)
-
-#Add ENet
-    add_subdirectory(${LIBS}/enet)
 
 #Add Lua
     add_subdirectory(${LIBS}/lua)
