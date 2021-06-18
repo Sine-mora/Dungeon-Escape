@@ -1,76 +1,25 @@
 # Това е CMake на ClientTest в папката sdlandCmake/src/ClientTest    
-cmake_minimum_required(VERSION 3.2)
-
-#Set binary name
-set(BINARY ${PROJECT_NAME}_ClientTest)
-
-message(STATUS "${PROJECT_NAME} is located in ${CMAKE_CURRENT_SOURCE_DIR}")
+cmake_minimum_required(VERSION 3.7.2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
+#Set binary name
+set(BINARY ${PROJECT_NAME}_ClientTest)
 
-message(STATUS "====== Current compiler is: ${CMAKE_CXX_COMPILER} ======")
-message(STATUS "====================================")
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    message(STATUS "No selected build type")
-    message(STATUS "Setting to Debug")
-    set(CMAKE_BUILD_TYPE "Debug")
-else()
-    message(STATUS "Selected build type is ${CMAKE_BUILD_TYPE}")
-endif()
-message(STATUS "====================================")
-
-function(post_build_copy argFileToCopy)
-    message(STATUS "[INFO]\n\n\n post_build_copy  ${PROJECT_NAME} \n\t\t copying argFileToCopy: ${argFileToCopy}\n\t\t to CMAKE_CURRENT_BINARY_DIR:  ${CMAKE_CURRENT_BINARY_DIR}\n")
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different           
-        ${argFileToCopy}                                    
-        ${CMAKE_CURRENT_BINARY_DIR})                        
-endfunction()
-
-set(SRC_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    ${LIBS}/Client/Client.cpp)
-
-set(HEADER_FILES
-    ${LIBS}/Client/Client.h)
-
-add_executable(${BINARY} ${HEADER_FILES} ${SRC_FILES})
+SOURCE_FILES(source_file_list src)
+add_executable(${BINARY} ${source_file_list})
 
 list(LENGTH source_file_list source_file_list_count)
 message(STATUS "[INFO] ${BINARY} Found ${source_file_list_count} source files.")
 
-set(LIBS ../../libs)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-include_directories(${LIBS})
-
-if(UNIX)
-    find_package(SDL2 REQUIRED)
-    target_link_libraries(${BINARY} PUBLIC SDL2)
-endif(UNIX)
-if(WIN32)   
-   
-     set(RENDERER_PATH ../../../../libs/k9/examples/ImGui_Example/Renderer/)
-    
+if(WIN32)
     target_include_directories(${BINARY} PUBLIC K9_Renderer_include_list)
     target_link_libraries(${BINARY} PUBLIC K9_Renderer) 
 
    set(CLIENT_LIB_PATH ${LIBS}/Client)
-        add_subdirectory(${CLIENT_LIB_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/Client)
-        target_include_directories(${BINARY} PUBLIC ${CLIENT_LIB_PATH})
-
-    set(SERIALIZABLE_PATH ${LIBS}/Serializable/src)
-        target_include_directories(${BINARY} PUBLIC ${SERIALIZABLE_PATH})
-
-    set(ENET_PATH ${LIBS}/enet)
-     #ENet needed libs for Windows
-    set(ENET_LIB "${ENET_PATH}/lib/x64/enet")
-    set(ENET_X64_WS2_WINM "${ENET_LIB};ws2_32.lib;winmm.lib")
-        target_include_directories(${BINARY} PUBLIC ${ENET_PATH}/include)
+        add_subdirectory(${CLIENT_LIB_PATH} ${CMAKE_CURRENT_BINARY_DIR}/libs/Client)
+        target_include_directories(${BINARY} PUBLIC ${Client_lib_include_path})
 
     set(SOL_PATH ${LIBS}/sol)
 	   target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
@@ -78,7 +27,7 @@ if(WIN32)
     set(LUA_PATH ${LIBS}/lua)
         target_include_directories(${BINARY} PUBLIC ${LUA_PATH}/include)
 
-        target_link_libraries(${BINARY} PUBLIC ${ENET_X64_WS2_WINM}; lua_lib)
+        target_link_libraries(${BINARY} PUBLIC Client_lib; ${ENET_X64_WS2_WINM}; lua_lib)
 
 
 

@@ -4,8 +4,8 @@
 #include <string>
 #include "enet/enet.h"
 #include "glm/glm.hpp"
-#include "Serializable/src/Point.h"
-#include "Serializable/src/Person.h"
+#include "Point.h"
+#include "Person.h"
 
 class Client {
 	private:

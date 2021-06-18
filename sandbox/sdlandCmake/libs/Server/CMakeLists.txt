@@ -5,21 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set source files
-set(SRC_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/Server.cpp)
-    
-# Set header file
-set(HEADER_FILES 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Server.h)
+set(server_lib Server_lib)
+SOURCE_FILES(source_file_list src)
+message(STATUS "[INFO] SERVER LIB ${server_lib} Found ${source_file_list_count} source files.")
+add_library(${server_lib} ${source_file_list})
 
-set(server_lib ${BINARY}_Server_lib)
-
-add_library(${server_lib} ${SRC_FILES} ${HEADER_FILES})
-
-#IMGUI_EXAMPLE_PATH
-
-target_include_directories(${server_lib} PUBLIC ${ENET_PATH}/include; ${GLM_PATH}/include)
-target_link_libraries(${server_lib} PUBLIC ${ENET_X64_WS2_WINM}; glm)
+set(include_paths "${ENET_PATH}/include;${RENDERER_PATH}/libs/glm/glm;${Serializable_lib_include_path}")
+message(STATUS "include_paths: ${include_paths}")
+target_include_directories(${server_lib} PUBLIC ${include_paths})
+target_link_libraries(${server_lib} PUBLIC ${ENET_X64_WS2_WINM}; k9_glm; Serializable_lib)
 
  message(STATUS "\nServer lib : ${server_lib}\n")
 
+ set(Server_lib_include_path "${CMAKE_CURRENT_SOURCE_DIR}/src;${include_paths}" PARENT_SCOPE)

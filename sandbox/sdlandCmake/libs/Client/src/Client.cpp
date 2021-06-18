@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Client.h"
 #include "glm/glm.hpp"
-#include "Serializable/src/Point.h"
-#include "Serializable/src/Person.h"
+#include "Point.h"
+#include "Person.h"
 
 /// <summary>
 /// Create a client object with default values. Filled in later functions
