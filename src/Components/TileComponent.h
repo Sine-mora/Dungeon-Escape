@@ -8,7 +8,7 @@
 
 class TileComponent: public Component {
     public:
-        SDL_Texture *texture;
+        SharedTexture texture;
         SDL_Rect sourceRectangle;
         SDL_Rect destinationRectangle;
         glm::vec2 position;
@@ -31,7 +31,7 @@ class TileComponent: public Component {
         }
 
         ~TileComponent() {
-            SDL_DestroyTexture(texture);
+            
         }
 
         void Update(float deltaTime) override {

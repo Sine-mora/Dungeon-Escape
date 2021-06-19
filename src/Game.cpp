@@ -10,7 +10,9 @@
 #include "TextLabelComponent.h"
 #include "ProjectileEmitterComponent.h"
 #include "glm/glm.hpp"
+#include "imgui.h"
 #include <optional>
+#include <Renderer/Renderer2D.h>
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -35,29 +37,9 @@ bool Game::IsRunning() const {
 }
 
 bool Game::Initialize(int width, int height) {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        std::cerr << "Error initializing SDL." << std::endl;
-        return false;
-    }
-    if (TTF_Init() != 0) {
-        std::cerr << "Error initializing SDL TTF" << std::endl;
-        return false;
-    }
-    window = SDL_CreateWindow(
-        NULL,
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        width,
-        height,
-        SDL_WINDOW_BORDERLESS
-    );
-    if (!window) {
-        std::cerr << "Error creating SDL window." << std::endl;
-        return false;
-    }
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    if (!renderer) {
-        std::cerr << "Error creating SDL renderer." << std::endl;
+    if (!K9::Renderer2D::Ref().Init("Title", width, height))
+    {
+        std::cerr << "Game::Initialize Error! Failed to init K9::Renderer2D\n";
         return false;
     }
 
@@ -306,6 +288,8 @@ void Game::ProcessInput() {
             break;
         }
     }
+
+    K9::Renderer2D::Ref().HandleEvent(event);
 }
 
 void Game::Update() {
@@ -333,8 +317,8 @@ void Game::Update() {
 }
 
 void Game::Render() {
-    SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
-    SDL_RenderClear(renderer);
+    auto& rend = K9::Renderer2D::Ref();
+    rend.BeginFrame();
 
     if (manager.HasNoEntities()) {
         return;
@@ -342,14 +326,21 @@ void Game::Render() {
 
     manager.Render();
 
-    SDL_RenderPresent(renderer);
+    K9::Renderer2D::Ref().BeginImGUIFrame();
+    ImGui::ShowDemoWindow(&isRunning);
+
+
+    K9::Renderer2D::Ref().EndImGUIFrame();
+
+    rend.EndFrame();
 }
 
 void Game::HandleCameraMovement() {
     if (mainPlayer) {
         TransformComponent* mainPlayerTransform = mainPlayer->GetComponent<TransformComponent>();
-        camera.x = mainPlayerTransform->position.x - (WINDOW_WIDTH / 2);
-        camera.y = mainPlayerTransform->position.y - (WINDOW_HEIGHT / 2);
+        const auto& screenSize = K9::Renderer2D::Ref().GetScreenSize();
+        camera.x = mainPlayerTransform->position.x - (screenSize.w / 2);
+        camera.y = mainPlayerTransform->position.y - (screenSize.h / 2);
 
         camera.x = camera.x < 0 ? 0 : camera.x;
         camera.y = camera.y < 0 ? 0 : camera.y;
@@ -382,7 +373,5 @@ void Game::ProcessGameOver() {
 }
 
 void Game::Destroy() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    K9::Renderer2D::Ref().Shutdown();
 }

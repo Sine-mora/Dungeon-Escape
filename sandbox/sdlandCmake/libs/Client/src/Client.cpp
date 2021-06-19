@@ -12,6 +12,7 @@ Client::Client() : m_client{ nullptr }, m_address{}, m_event{}, m_peer{ nullptr 
 
 Client::~Client() {
 	Shutdown();
+	Disconnect();
 }
 
 /// <summary>

@@ -9,7 +9,7 @@
 class SpriteComponent: public Component {
     private:
         TransformComponent* transform;
-        SDL_Texture* texture;
+        SharedTexture texture;
         SDL_Rect sourceRectangle;
         SDL_Rect destinationRectangle;
         bool isAnimated;

@@ -25,116 +25,59 @@ else()
 endif()
 message(STATUS "====================================")
 
-MACRO(HEADER_DIRECTORIES return_list curr_dir)
-    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.hpp)
-    SET(dir_list "")
-    FOREACH(file_path ${new_list})
-        GET_FILENAME_COMPONENT(dir_path ${file_path} PATH)
-        SET(dir_list ${dir_list} ${dir_path})
-    ENDFOREACH()
-    LIST(REMOVE_DUPLICATES dir_list)
-    SET(${return_list} ${dir_list})
-ENDMACRO()
-
-MACRO(SOURCE_FILES return_list curr_dir)
-    FILE(GLOB_RECURSE new_list ${curr_dir}/*.h ${curr_dir}/*.cpp ${curr_dir}/*.hpp ${curr_dir}/*.inl ${curr_dir}/*.c)
-    SET(dir_list "")
-    FOREACH(file_path ${new_list})
-        message(STATUS "[INFO] file_path: ${file_path}")
-        SET(dir_list ${dir_list} ${file_path})
-    ENDFOREACH()
-    LIST(REMOVE_DUPLICATES dir_list)
-    SET(${return_list} ${dir_list})
-ENDMACRO()
-
-function(post_build_copy argFileToCopy)
-    message(STATUS "[INFO]\n\n\n post_build_copy  ${PROJECT_NAME} \n\t\t copying argFileToCopy: ${argFileToCopy}\n\t\t to CMAKE_CURRENT_BINARY_DIR:  ${CMAKE_CURRENT_BINARY_DIR}\n")
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different           
-        ${argFileToCopy}                                    
-        ${CMAKE_CURRENT_BINARY_DIR})                        
-endfunction()
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libs/k9/examples/ImGui_Example/Renderer)
 
 set(BINARY ${PROJECT_NAME})
+set(LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 
 SOURCE_FILES(source_file_list src)
-
 list(LENGTH source_file_list source_file_list_count)
 message(STATUS "[INFO] ${BINARY} Found ${source_file_list_count} source files.")
-
 add_executable(${BINARY} ${source_file_list})
 
-set(LIBS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/Components)
-include_directories(${LIBS})
+target_link_libraries(${BINARY} PUBLIC K9_Renderer)
+target_include_directories(${BINARY} PUBLIC
+							${CMAKE_CURRENT_SOURCE_DIR}/src
+							${CMAKE_CURRENT_SOURCE_DIR}/src/Components
+							${LIBS}
+							K9_Renderer_include_list)
 
-if(UNIX)
-    find_package(SDL2 REQUIRED)
-    target_link_libraries(${BINARY} PUBLIC SDL2)
-endif(UNIX)
-if(WIN32)
-	
+
+#todo erase when k9 is fully integrated
     set(SDL_PATH ${LIBS}/SDL2)
 	    add_subdirectory(${SDL_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_INCLUDE_DIRS})
 
-    set(SDL_IMAGE_PATH ${LIBS}/SDL2_image)
-     add_subdirectory(${SDL_IMAGE_PATH})
-	    target_include_directories(${BINARY} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
-
-    set(SDL_MIXER_PATH ${LIBS}/SDL2_mixer)
-        add_subdirectory(${SDL_MIXER_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_MIXER_INCLUDE_DIRS})
-
-    set(SDL2_TTF_PATH ${LIBS}/SDL2_ttf)
-        add_subdirectory(${SDL2_TTF_PATH})
-        target_include_directories(${BINARY} PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
-
-    set(LUA_PATH ${LIBS}/lua)
-        add_subdirectory(${LUA_PATH})
-        target_include_directories(${BINARY} PUBLIC ${LUA_INCLUDE_DIRS})
+set(LUA_PATH ${LIBS}/lua)
+add_subdirectory(${LUA_PATH})
+target_include_directories(${BINARY} PUBLIC ${LUA_INCLUDE_DIRS})
 	
-    set(SOL_PATH ${LIBS}/sol)
-        add_subdirectory(${SOL_PATH})
-	    target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
-	
-    set(GLM_PATH ${LIBS}/glm)
-        add_subdirectory(${GLM_PATH})
-	   target_include_directories(${BINARY} PUBLIC ${GLM_PATH})
-	
-    set(IMGUI_PATH ${LIBS}/imgui)
-        add_subdirectory(${IMGUI_PATH})
-	    target_include_directories(${BINARY} PUBLIC ${IMGUI_PATH})
+set(SOL_PATH ${LIBS}/sol)
+add_subdirectory(${SOL_PATH})
+target_include_directories(${BINARY} PUBLIC ${SOL_PATH})
 
-    #TODO MAKE GLM Lib and add to the target_link_libs
-	
-    target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; ${SDL2_IMAGE_LIBRARIES}; ${SDL2_MIXER_LIBRARIES}; ${SDL2_TTF_LIBRARIES}; lua_lib; imgui; glm)
+target_link_libraries(${BINARY} PUBLIC ${SDL2_LIBRARIES}; lua_lib;)
 
-    #Copy the lua53.dll 	
-    post_build_copy("${LUA_PATH}/lua53.dll")
 
-    #Copy the SDL2.dll 	
-    post_build_copy("${EXTERN_SDL_LIBS_PATH}/SDL2.dll")
+copy_assets("${BINARY}"
+			"${BINARY}_assets"
+			"${K9_ASSET_COPY_SCRIPT_PATH}"
+			"${CMAKE_CURRENT_SOURCE_DIR}/assets"
+			"${CMAKE_CURRENT_BINARY_DIR}")
 
-    #Copy the SDL Image dlls
-    post_build_copy("${EXTERN_SDL_IMAGE_LIBS_PATH}/SDL2_image.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libjpeg-9.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libpng16-16.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libtiff-5.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/libwebp-7.dll;${EXTERN_SDL_IMAGE_LIBS_PATH}/zlib1.dll")
-
-    #Copy the SDL Mixer dlls
-    post_build_copy("${EXTERN_SDL_MIXER_LIBS_PATH}/SDL2_mixer.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libFLAC-8.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libmodplug-1.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libmpg123-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libogg-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libopus-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libopusfile-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libvorbis-0.dll;${EXTERN_SDL_MIXER_LIBS_PATH}/libvorbisfile-3.dll;")
-
-    #Copy the SDL TTF dlls
-    post_build_copy("${EXTERN_SDL_TTF_LIBS_PATH}/SDL2_ttf.dll;${EXTERN_SDL_TTF_LIBS_PATH}/libfreetype-6.dll;${EXTERN_SDL_TTF_LIBS_PATH}/zlib1.dll")
-	
-    #Copy the Assets folder
-    set(ASSETS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assets)
-    file(COPY ${ASSETS_PATH} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-	#End of copy
-
-    message(STATUS "[INFO] ${BINARY} SDL_PATH: ${SDL_PATH}\n SDL_INCLUDE_DIRS:  ${SDL2_INCLUDE_DIRS} \n SDL2_LIBRARIES: ${SDL2_LIBRARIES} \n EXTERN_SDL_LIBS_PATH: ${EXTERN_SDL_LIBS_PATH} \n
-SDL_IMAGE_PATH: ${SDL_IMAGE_PATH}\n SDL_IMAGE_INCLUDE_DIRS: ${SDL2_IMAGE_INCLUDE_DIRS} \n SDL2_IMAGE_LIBRARIES: ${SDL2_IMAGE_LIBRARIES} \n EXTERN_SDL_IMAGE_PATH: ${EXTERN_SDL_IMAGE_LIBS_PATH} \n
-SDL_MIXER_PATH: ${SDL_MIXER_PATH}\n SDL_MIXER_INCLUDE_DIRS: ${SDL2_MIXER_INCLUDE_DIRS} \n SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES} \n EXTERN_SDL_MIXER_PATH: ${EXTERN_SDL_MIXER_LIBS_PATH} \n
-SDL_TTF_PATH: ${SDL_TTF_PATH}\n SDL_TTF_INCLUDE_DIRS: ${SDL2_TTF_INCLUDE_DIRS} \n SDL2_TTF_LIBRARIES: ${SDL2_TTF_LIBRARIES} \n EXTERN_SDL_TTF_PATH: ${EXTERN_SDL_TTF_LIBS_PATH} \n ==[include Dir of LUA]: ${LUA_INCLUDE_DIRS}\n")
-
-endif(WIN32)
+copy_asset_list("${BINARY}"
+				"${BINARY}_lua"
+				"${K9_LIB_COPY_SCRIPT_PATH}"
+				"${LUA_PATH}/lua53.dll"
+				"${CMAKE_CURRENT_BINARY_DIR}")
+ 
+copy_assets("${K9_ASSET_TARGET}"
+			"${K9_ASSET_DEPENDENCY}"
+			"${K9_ASSET_COPY_SCRIPT_PATH}"
+			"${K9_ASSET_FOLDER_TO_COPY}"
+			"${CMAKE_CURRENT_BINARY_DIR}")
+message(status "Client K9_LIBS_TO_COPY: ${K9_LIBS_TO_COPY}")
+copy_asset_list("${K9_LIB_TARGET}"
+			"${K9_LIB_DEPENDENCY}"
+			"${K9_LIB_COPY_SCRIPT_PATH}"
+			"${K9_LIBS_TO_COPY}"
+			"${CMAKE_CURRENT_BINARY_DIR}")

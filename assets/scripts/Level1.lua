@@ -10,7 +10,7 @@ Level1 = {
     assets = {
         [0] = { type="texture", id = "terrain-texture-day", file = "./assets/tilemaps/jungle.png" },
         [1] = { type="texture", id = "terrain-texture-night", file = "./assets/tilemaps/jungle-night.png" },
-        [2] = { type="texture", id = "chopper-texture", file = "./assets/images/chopper-spritesheet.png" },
+        [2] = { type="texture", id = "chopper-texture", file = "./assets/images/bandit-spritesheet.png" },
         [3] = { type="texture", id = "projectile-texture", file = "./assets/images/bullet-enemy.png" },
         [4] = { type="texture", id = "obstacles-texture", file = "./assets/images/obstacles.png" },
         [5] = { type="texture", id = "truck-left-texture", file = "./assets/images/truck-left.png" },

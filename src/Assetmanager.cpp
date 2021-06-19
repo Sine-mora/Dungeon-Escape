@@ -18,7 +18,7 @@ void AssetManager::AddFont(std::string fontId, const char* filePath, int fontSiz
     fonts.emplace(fontId, FontManager::LoadFont(filePath, fontSize));
 }
 
-SDL_Texture* AssetManager::GetTexture(std::string textureId) {
+const SharedTexture& AssetManager::GetTexture(std::string textureId) {
     return textures[textureId];
 }
 
