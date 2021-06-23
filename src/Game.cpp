@@ -43,6 +43,8 @@ bool Game::Initialize(int width, int height) {
         return false;
     }
 
+    // v  Gameplay State  v
+    //Game.cpp - StateManager
         LoadLevel(1);
 
     isRunning = true;
@@ -328,9 +330,13 @@ void Game::Render() {
 
     K9::Renderer2D::Ref().BeginImGUIFrame();
     ImGui::ShowDemoWindow(&isRunning);
+    ImGui::ShowAboutWindow(&isRunning);
+    
+
 
 
     K9::Renderer2D::Ref().EndImGUIFrame();
+
 
     rend.EndFrame();
 }
