@@ -13,6 +13,15 @@
 #include "imgui.h"
 #include <optional>
 #include <Renderer/Renderer2D.h>
+#include "StateMgr/DeathState.h"
+#include "StateMgr/GameOverState.h"
+#include "StateMgr/GamePausedState.h"
+#include "StateMgr/GameWinState.h"
+#include "StateMgr/MultiplayerState.h"
+#include "StateMgr/SettingsState.h"
+#include "StateMgr/MainMenuState.h"
+
+
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -42,6 +51,9 @@ bool Game::Initialize(int width, int height) {
         std::cerr << "Game::Initialize Error! Failed to init K9::Renderer2D\n";
         return false;
     }
+    m_stateMgr.RegisterState(new MainMenuState(&m_stateMgr));
+
+
 
     // v  Gameplay State  v
     //Game.cpp - StateManager

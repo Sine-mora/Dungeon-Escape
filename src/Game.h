@@ -8,6 +8,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "EntityManager.h"
+#include "StateMgr/StateMgr.h"
 
 class AssetManager;
 
@@ -15,6 +16,7 @@ class Game {
     private:
         bool isRunning;
         SDL_Window *window;
+        StateMgr m_stateMgr;
     public:
         Game();
         ~Game();
@@ -35,5 +37,4 @@ class Game {
         void HandleCameraMovement();
         void CheckCollisions();
 };
-
 #endif
