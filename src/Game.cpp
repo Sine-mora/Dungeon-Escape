@@ -16,6 +16,8 @@
 #include "StateMgr/DeathState.h"
 #include "StateMgr/GameOverState.h"
 #include "StateMgr/GamePausedState.h"
+#include "StateMgr/GamePlayState.h"
+#include "StateMgr/LoadLevelState.h"
 #include "StateMgr/GameWinState.h"
 #include "StateMgr/MultiplayerState.h"
 #include "StateMgr/SettingsState.h"
@@ -51,9 +53,10 @@ bool Game::Initialize(int width, int height) {
         std::cerr << "Game::Initialize Error! Failed to init K9::Renderer2D\n";
         return false;
     }
-    m_stateMgr.RegisterState(new MainMenuState(&m_stateMgr));
+    m_stateMgr.RegisterState(new GamePlayState(&m_stateMgr));
+    m_stateMgr.RegisterState(new LoadLevelState(&m_stateMgr));
 
-
+    m_stateMgr.ChangeState(EState::GamePlayState);
 
     // v  Gameplay State  v
     //Game.cpp - StateManager
@@ -306,7 +309,8 @@ void Game::ProcessInput() {
     K9::Renderer2D::Ref().HandleEvent(event);
 }
 
-void Game::Update() {
+void Game::Update() 
+{
     // Waste some time / sleep until we reach the target frame time in milliseconds
     int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
 
@@ -325,12 +329,14 @@ void Game::Update() {
     ticksLastFrame = SDL_GetTicks();
 
     manager.Update(deltaTime);
+    m_stateMgr.Update(deltaTime);
 
     HandleCameraMovement();
     CheckCollisions();
 }
 
-void Game::Render() {
+void Game::Render() 
+{
     auto& rend = K9::Renderer2D::Ref();
     rend.BeginFrame();
 

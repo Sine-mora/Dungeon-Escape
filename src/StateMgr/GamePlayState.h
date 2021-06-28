@@ -15,6 +15,9 @@ public:
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual EState GetName() const override { return EState::GamePlayState; }
+private:
+
+	float m_fCountdown;
 };
 
 #endif // !GAMEPLAYSTATE_H

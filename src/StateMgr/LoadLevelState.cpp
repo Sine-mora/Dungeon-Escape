@@ -1,25 +1,30 @@
 #include "LoadLevelState.h"
 #include "GamePlayState.h"
+#include "StateMgr.h"
 #include <iostream>
+
+LoadLevelState::LoadLevelState(StateMgr* ptrOwner) : IState(ptrOwner)
+{
+}
 
 void LoadLevelState::Update(float fDeltaTime)
 {
-	for (int i = 0; i <= 10; i++)
+	m_fCountdown = m_fCountdown - fDeltaTime;
+	std::cout << m_fCountdown << "\n";
+	if (m_fCountdown <= 0)
 	{
-		std::cout << " Load level State: " << i << " ";
+		m_ptrOwner->ChangeState(EState::GamePlayState);
 	}
 
 }
 
 void LoadLevelState::OnEnter()
 {
-	float fDeltaTime;
-	std::cout << " Load Level State On Enter:\n";
-	Update( fDeltaTime);
-	OnExit();
+	m_fCountdown = 10;
+	std::cout << "On Enter Load Level\n";
 }
 
 void LoadLevelState::OnExit()
 {
-
+	std::cout << "On Exit Load Level\n";
 }

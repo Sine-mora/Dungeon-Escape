@@ -13,5 +13,7 @@ public:
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual EState GetName() const override { return EState::LoadLevelState; }
+private:
+	float m_fCountdown;
 };
 #endif // !LOADLEVELSTATE_H
