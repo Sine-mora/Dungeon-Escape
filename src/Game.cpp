@@ -13,15 +13,9 @@
 #include "imgui.h"
 #include <optional>
 #include <Renderer/Renderer2D.h>
-#include "StateMgr/DeathState.h"
-#include "StateMgr/GameOverState.h"
-#include "StateMgr/GamePausedState.h"
+
 #include "StateMgr/GamePlayState.h"
 #include "StateMgr/LoadLevelState.h"
-#include "StateMgr/GameWinState.h"
-#include "StateMgr/MultiplayerState.h"
-#include "StateMgr/SettingsState.h"
-#include "StateMgr/MainMenuState.h"
 
 
 
@@ -300,6 +294,7 @@ void Game::ProcessInput() {
             if (event.key.keysym.sym == SDLK_ESCAPE) {
                 isRunning = false;
             }
+            break;
         }
         default: {
             break;
@@ -359,19 +354,6 @@ void Game::Render()
     rend.EndFrame();
 }
 
-void Game::HandleCameraMovement() {
-    if (mainPlayer) {
-        TransformComponent* mainPlayerTransform = mainPlayer->GetComponent<TransformComponent>();
-        const auto& screenSize = K9::Renderer2D::Ref().GetScreenSize();
-        camera.x = mainPlayerTransform->position.x - (screenSize.w / 2);
-        camera.y = mainPlayerTransform->position.y - (screenSize.h / 2);
-
-        camera.x = camera.x < 0 ? 0 : camera.x;
-        camera.y = camera.y < 0 ? 0 : camera.y;
-        camera.x = camera.x > camera.w ? camera.w : camera.x;
-        camera.y = camera.y > camera.h ? camera.h : camera.y;
-    }
-}
 
 void Game::CheckCollisions() {
     CollisionType collisionType = manager.CheckCollisions();
