@@ -12,7 +12,7 @@ public:
 	{}
 	virtual ~IState() = default;
 	
-	//Add Draw()
+	//TODO: Add Draw(), Add Render()
 
 	/* State-specific behavior */
 	/* Update the state */

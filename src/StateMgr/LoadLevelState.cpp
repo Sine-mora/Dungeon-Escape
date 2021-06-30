@@ -235,8 +235,6 @@ bool LoadLevelState::LoadLevel(int levelNumber)
             entityIndex++;
         }
 
-        mainPlayer = manager.GetEntityByName("player");
-
     }
     catch (const sol::error& e)
     {

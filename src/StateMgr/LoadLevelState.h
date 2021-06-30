@@ -45,7 +45,6 @@ private:
 
 	Map* map;
 	EntityManager manager;
-	Entity* mainPlayer = NULL;
 
 };
 #endif // !LOADLEVELSTATE_H

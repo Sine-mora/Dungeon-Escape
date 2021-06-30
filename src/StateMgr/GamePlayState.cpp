@@ -36,20 +36,19 @@ void GamePlayState::Update(float fDeltaTime)
 
 void GamePlayState::OnEnter()
 {
-
-
 	std::cout << "On Enter Gameplay State\n";
-
+    m_mainPlayer = manager.GetEntityByName("player");
 }
 
 void GamePlayState::OnExit()
 {
 	std::cout << "On Exit Gameplay State\n";
+    m_mainPlayer = NULL;
 }
 
-void Game::HandleCameraMovement() {
-    if (mainPlayer) {
-        TransformComponent* mainPlayerTransform = mainPlayer->GetComponent<TransformComponent>();
+void GamePlayState::HandleCameraMovement() {
+    if (m_mainPlayer) {
+        TransformComponent* mainPlayerTransform = m_mainPlayer->GetComponent<TransformComponent>();
         const auto& screenSize = K9::Renderer2D::Ref().GetScreenSize();
         camera.x = mainPlayerTransform->position.x - (screenSize.w / 2);
         camera.y = mainPlayerTransform->position.y - (screenSize.h / 2);

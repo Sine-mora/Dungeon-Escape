@@ -42,14 +42,14 @@ public:
 	void CheckCollisions();
 
 
-	
-
 private:
 	int m_iTicksLastFrame = 0;
 	bool m_isRunning;
 	float m_fCountdown;
 	StateMgr m_stateMgr;
 	EntityManager manager;
+	Entity* m_mainPlayer = NULL;
+	SDL_Rect camera = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 };
 
 #endif // !GAMEPLAYSTATE_H
